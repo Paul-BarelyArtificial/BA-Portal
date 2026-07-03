@@ -1,0 +1,95 @@
+<!--
+==================================================
+BA Portal
+Version : v0.1.1
+Release : Library Framework
+Date    : 03 July 2026
+==================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BA Portal v0.1.1</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<aside class="sidebar">
+<h1>BA Portal</h1>
+<nav>
+<button class="nav-button active" data-page="dashboard">🏠 Dashboard</button>
+<button class="nav-button" data-page="library">📚 Library</button>
+<button class="nav-button" data-page="training">🎓 Training</button>
+<button class="nav-button" data-page="support">💬 Support</button>
+<button class="nav-button" data-page="booking">📅 Book a Session</button>
+<button class="nav-button" data-page="account">👤 My Account</button>
+</nav>
+
+<footer class="sidebar-footer">
+<div class="app-name">BA Portal</div>
+<div class="app-version">v0.1.1</div>
+</footer>
+</aside>
+
+<main class="main-content">
+<section id="dashboard" class="page active">
+<h2>Welcome back 👋</h2>
+<p>Everything you need is just a click away.</p>
+</section>
+
+<section id="library" class="page">
+<h2>📚 Library</h2>
+<p>Everything you need in one place.</p>
+
+<h3>Available Today</h3>
+
+<div class="card">
+<h4>📖 Guides</h4>
+<p>Simple, step-by-step guides written in plain English.</p>
+<button>Open Guides</button>
+</div>
+
+<div class="card">
+<h4>📄 Documents</h4>
+<p>Templates, checklists and downloadable PDFs.</p>
+<button>Browse Documents</button>
+</div>
+
+<div class="card">
+<h4>🔗 Useful Links</h4>
+<p>Recommended online resources, tools and services.</p>
+<button>Browse Links</button>
+</div>
+
+<div class="card">
+<h4>🔍 Search the Library</h4>
+<p>Find guides, documents and useful links.</p>
+<button>Search</button>
+</div>
+
+<h3>Coming Soon</h3>
+
+<div class="card muted">
+<h4>📤 Upload a Document</h4>
+<p>Soon you'll be able to upload documents directly through the portal.</p>
+<span>Coming Soon</span>
+</div>
+
+<div class="card muted">
+<h4>🎥 Video Library</h4>
+<p>Short, easy-to-follow training videos.</p>
+<span>Coming Soon</span>
+</div>
+</section>
+
+<section id="training" class="page"><h2>Training</h2></section>
+<section id="support" class="page"><h2>Support</h2></section>
+<section id="booking" class="page"><h2>Book a Session</h2></section>
+<section id="account" class="page"><h2>My Account</h2></section>
+
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>
