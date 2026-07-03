@@ -7,5 +7,5 @@ Date    : 03 July 2026
 ==================================================
 */
 
-const APP_VERSION = "v0.1.3";
-const RELEASE_NAME = "Centralised Version Management";
+const APP_VERSION = "v0.1.4";
+const RELEASE_NAME = "Dashboard";
