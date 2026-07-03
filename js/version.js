@@ -7,5 +7,5 @@ Date    : 03 July 2026
 ==================================================
 */
 
-const APP_VERSION = "v0.1.4";
-const RELEASE_NAME = "Dashboard";
+const APP_VERSION = "v0.1.5";
+const RELEASE_NAME = "Training";
