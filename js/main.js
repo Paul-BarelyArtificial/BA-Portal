@@ -1,17 +1,32 @@
 /*
+==================================================
 BA Portal
 Version : v0.1.1
 Release : Library Framework
+Date    : 03 July 2026
+==================================================
 */
 
-const buttons=document.querySelectorAll('.nav-button');
-const pages=document.querySelectorAll('.page');
+const buttons = document.querySelectorAll(".nav-button");
+const pages = document.querySelectorAll(".page");
 
-buttons.forEach(btn=>{
- btn.addEventListener('click',()=>{
-   buttons.forEach(b=>b.classList.remove('active'));
-   pages.forEach(p=>p.classList.remove('active'));
-   btn.classList.add('active');
-   document.getElementById(btn.dataset.page).classList.add('active');
- });
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+
+        buttons.forEach((b) => b.classList.remove("active"));
+        pages.forEach((p) => p.classList.remove("active"));
+        button.classList.add("active");
+        const page = document.getElementById(button.dataset.page);
+        if (page) {
+            page.classList.add("active");
+        }
+    });
 });
+
+// ---------- Version Display ----------
+
+const versionElement = document.querySelector(".app-version");
+
+if (versionElement) {
+    versionElement.textContent = APP_VERSION;
+}
