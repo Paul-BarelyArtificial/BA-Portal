@@ -23,6 +23,31 @@ buttons.forEach((button) => {
     });
 });
 
+// ---------- Dashboard Card Navigation ----------
+
+const dashboardCards = document.querySelectorAll("[data-page-link]");
+
+dashboardCards.forEach((card) => {
+    card.style.cursor = "pointer";
+
+    card.addEventListener("click", () => {
+
+        const target = card.dataset.pageLink;
+
+        buttons.forEach((b) => b.classList.remove("active"));
+        pages.forEach((p) => p.classList.remove("active"));
+
+        document
+            .querySelector(`[data-page="${target}"]`)
+            ?.classList.add("active");
+
+        document
+            .getElementById(target)
+            ?.classList.add("active");
+    });
+});
+
+
 // ---------- Version Display ----------
 
 const versionElement = document.querySelector(".app-version");
