@@ -1,9 +1,9 @@
 <!--
 ==================================================
 BA Portal
-Version : v0.1.1
-Release : Library Framework
-Date    : 03 July 2026
+Version : v0.1.7
+Release : Book a Session
+Date    : 08 July 2026
 ==================================================
 -->
 <!DOCTYPE html>
@@ -11,8 +11,8 @@ Date    : 03 July 2026
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BA Portal v0.1.1</title>
-<link rel="stylesheet" href="css/styles.css">
+<title>BA Portal v0.1.7</title>
+<link rel="stylesheet" href="css/styles.css?v=0.1.7">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </head>
@@ -30,7 +30,7 @@ Date    : 03 July 2026
 
 <footer class="sidebar-footer">
 <div class="app-name">BA Portal</div>
-<div class="app-version">v0.1.2</div>
+<div class="app-version">v0.1.7</div>
 </footer>
 </aside>
 
@@ -168,13 +168,46 @@ Date    : 03 July 2026
 </button>
   </div>
 </section>
-<section id="support" class="page"><h2>Support</h2></section>
-<section id="booking" class="page"><h2>Book a Session</h2></section>
-<section id="account" class="page"><h2>My Account</h2></section>
+<section id="support" class="page">
+  <h2>💬 Support</h2>
+  <p class="intro">Get help when you need it.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>📅 Book a Session</h3>
+      <p>Arrange a one-to-one session if you would like someone to talk you through anything.</p>
+      <button class="page-button" data-target-page="booking">Book a Session</button>
+    </div>
+
+    <div class="card">
+      <h3>✉️ Contact Barely Artificial</h3>
+      <p>For anything urgent, contact Barely Artificial directly using your usual contact details.</p>
+      <button disabled>Contact Details Coming Soon</button>
+    </div>
+  </div>
+</section>
+
+<section id="booking" class="page">
+  <h2>📅 Book a Session</h2>
+  <p class="intro">Choose the type of help you need. For now, each option uses the same booking calendar.</p>
+
+  <div id="session-list" class="card-grid"></div>
+</section>
+
+<section id="account" class="page">
+  <h2>👤 My Account</h2>
+  <p class="intro">Your portal details will appear here.</p>
+
+  <div class="card muted">
+    <h3>Account Details</h3>
+    <p>Access dates, customer details and login information will be added in a future release.</p>
+    <span class="badge">Coming Soon</span>
+  </div>
+</section>
 
 </main>
 
-<script src="js/version.js"></script>
-<script src="js/main.js"></script>
+<script src="js/version.js?v=0.1.7"></script>
+<script src="js/main.js?v=0.1.7"></script>
 </body>
 </html>

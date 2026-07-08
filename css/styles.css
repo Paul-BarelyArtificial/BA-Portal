@@ -1,9 +1,9 @@
 /*
 ==================================================
 BA Portal
-Version : v0.1.2
-Release : Dark Brand Styling
-Date    : 03 July 2026
+Version : v0.1.7
+Release : Book a Session
+Date    : 08 July 2026
 ==================================================
 */
 
@@ -156,6 +156,27 @@ p {
     margin-bottom: 28px;
 }
 
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 22px 0 30px;
+}
+
+.card-grid .card {
+    margin-bottom: 0;
+}
+
+.intro {
+    font-size: 1.1rem;
+    margin-bottom: 28px;
+}
+
+.section-heading {
+    margin-top: 36px;
+}
+
 .card {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015));
     border: 1px solid var(--border-soft);
@@ -191,6 +212,61 @@ p {
     background: rgba(216, 178, 110, 0.24);
     border-color: rgba(216, 178, 110, 0.58);
 }
+
+.card button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.card button:disabled:hover {
+    background: var(--accent-soft);
+    border-color: rgba(216, 178, 110, 0.36);
+}
+
+.session-card {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.session-card h3 {
+    margin-top: 0;
+}
+
+.session-card button,
+.session-card .badge {
+    margin-top: auto;
+}
+
+.session-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 18px;
+}
+
+.session-meta span {
+    display: inline-block;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: rgba(244, 241, 234, 0.07);
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    font-weight: 650;
+}
+
+.badge {
+    display: inline-block;
+    margin-top: 2px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: rgba(244, 241, 234, 0.08);
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
 
 .card.muted {
     background: rgba(255, 255, 255, 0.025);
