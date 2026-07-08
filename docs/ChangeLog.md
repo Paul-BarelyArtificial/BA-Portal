@@ -1,5 +1,30 @@
 # BA Portal Change Log
 
+## v0.1.8 – Resources
+**Date:** 08 July 2026
+
+### Added
+- Replaced the old Library placeholder with a proper **Resources** page.
+- Added customer-friendly resource sections:
+  - Recently Added
+  - Training Guides
+  - Project Documents
+  - Useful Links
+- Added instant resource search.
+- Added data-driven resource cards in `js/main.js`.
+- Added resource cards with icons, descriptions, update text, type labels and action buttons.
+- Added useful link cards for ChatGPT, Claude and Barely Artificial.
+- Added Coming Soon placeholders for Video Library and Customer Uploads.
+
+### Changed
+- Renamed **Library** to **Resources** in the navigation and dashboard.
+- Updated the displayed portal version to **v0.1.8 – Resources**.
+- Added CSS for resource search, resource cards and responsive layouts.
+
+### Notes
+- Document resources currently use placeholder links. Real file URLs can be added later without changing the page layout.
+- The Resources structure is ready to be connected to Firebase or another content source later.
+
 ## v0.1.7 – Book a Session
 **Date:** 08 July 2026
 

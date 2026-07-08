@@ -1,8 +1,8 @@
 /*
 ==================================================
 BA Portal
-Version : v0.1.7
-Release : Book a Session
+Version : v0.1.8
+Release : Resources
 Date    : 08 July 2026
 ==================================================
 */
@@ -328,5 +328,117 @@ p {
 
     .card {
         border-radius: var(--radius-md);
+    }
+}
+
+/*
+==================================================
+Resources v0.1.8
+==================================================
+*/
+
+.resource-search-wrap {
+    max-width: 760px;
+    margin: 24px 0 34px;
+}
+
+.resource-search-wrap label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.resource-search-wrap input {
+    width: 100%;
+    padding: 15px 17px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.045);
+    color: var(--text-main);
+    font-size: 1rem;
+    outline: none;
+}
+
+.resource-search-wrap input:focus {
+    border-color: rgba(216, 178, 110, 0.52);
+    box-shadow: 0 0 0 4px rgba(216, 178, 110, 0.10);
+}
+
+.resource-search-wrap input::placeholder {
+    color: var(--text-soft);
+}
+
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 18px 0 30px;
+}
+
+.resource-card {
+    min-height: 235px;
+    display: flex;
+    flex-direction: column;
+}
+
+.resource-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.resource-card-header h3 {
+    margin: 0 0 5px;
+}
+
+.resource-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: rgba(244, 241, 234, 0.07);
+    font-size: 1.25rem;
+    flex: 0 0 auto;
+}
+
+.resource-type {
+    color: var(--text-soft);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.resource-card .new-badge {
+    margin-left: auto;
+    background: rgba(216, 178, 110, 0.16);
+    color: var(--accent-hover);
+}
+
+.resource-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: auto;
+    padding-top: 18px;
+}
+
+.resource-footer span {
+    color: var(--text-soft);
+    font-size: 0.88rem;
+    font-weight: 650;
+}
+
+.resource-empty {
+    max-width: 760px;
+}
+
+@media (max-width: 760px) {
+    .resource-footer {
+        align-items: flex-start;
+        flex-direction: column;
     }
 }

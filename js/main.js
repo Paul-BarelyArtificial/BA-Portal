@@ -1,8 +1,8 @@
 /*
 ==================================================
 BA Portal
-Version : v0.1.7
-Release : Book a Session
+Version : v0.1.8
+Release : Resources
 Date    : 08 July 2026
 ==================================================
 */
@@ -51,6 +51,204 @@ pageButtons.forEach((button) => {
         showPage(button.dataset.targetPage);
     });
 });
+
+
+// ---------- Resources ----------
+
+const resources = [
+    {
+        icon: "📘",
+        title: "AI Basics for SMEs",
+        description: "A plain-English introduction to what AI is and where it can help.",
+        category: "Training Guides",
+        type: "Guide",
+        updated: "Added this week",
+        action: "Open",
+        url: "#",
+        isNew: true
+    },
+    {
+        icon: "💬",
+        title: "Getting Started with ChatGPT",
+        description: "A simple guide to using ChatGPT safely and usefully.",
+        category: "Training Guides",
+        type: "Guide",
+        updated: "Updated 8 July",
+        action: "Open",
+        url: "#",
+        isNew: true
+    },
+    {
+        icon: "✍️",
+        title: "Prompt Writing Basics",
+        description: "How to ask clearer questions and get better answers from AI tools.",
+        category: "Training Guides",
+        type: "Guide",
+        updated: "Updated 8 July",
+        action: "Open",
+        url: "#",
+        isNew: false
+    },
+    {
+        icon: "📄",
+        title: "Project Proposal",
+        description: "The agreed project approach, scope and objectives.",
+        category: "Project Documents",
+        type: "PDF",
+        updated: "Updated 3 July",
+        action: "Open",
+        url: "#",
+        isNew: true
+    },
+    {
+        icon: "📄",
+        title: "Statement of Work",
+        description: "What is included, what is not included, and how delivery will work.",
+        category: "Project Documents",
+        type: "Document",
+        updated: "Updated 3 July",
+        action: "Open",
+        url: "#",
+        isNew: false
+    },
+    {
+        icon: "✅",
+        title: "Customer Readiness Checklist",
+        description: "A simple checklist showing what we need from you and when.",
+        category: "Project Documents",
+        type: "Checklist",
+        updated: "Updated 4 July",
+        action: "Open",
+        url: "#",
+        isNew: false
+    },
+    {
+        icon: "🌐",
+        title: "ChatGPT",
+        description: "Open ChatGPT in a new browser tab.",
+        category: "Useful Links",
+        type: "Website",
+        updated: "Useful link",
+        action: "Visit",
+        url: "https://chatgpt.com/",
+        isNew: false
+    },
+    {
+        icon: "🌐",
+        title: "Claude",
+        description: "Open Claude in a new browser tab.",
+        category: "Useful Links",
+        type: "Website",
+        updated: "Useful link",
+        action: "Visit",
+        url: "https://claude.ai/",
+        isNew: false
+    },
+    {
+        icon: "🌐",
+        title: "Barely Artificial",
+        description: "Visit the Barely Artificial website.",
+        category: "Useful Links",
+        type: "Website",
+        updated: "Useful link",
+        action: "Visit",
+        url: "https://www.barelyartificial.com/",
+        isNew: false
+    }
+];
+
+const resourceContainers = {
+    "Training Guides": document.getElementById("training-guide-resources"),
+    "Project Documents": document.getElementById("project-document-resources"),
+    "Useful Links": document.getElementById("useful-link-resources")
+};
+
+function createResourceCard(resource) {
+    const card = document.createElement("article");
+    card.className = "card resource-card";
+    card.dataset.searchText = `${resource.title} ${resource.description} ${resource.category} ${resource.type}`.toLowerCase();
+
+    const newBadge = resource.isNew ? '<span class="badge new-badge">New</span>' : "";
+
+    card.innerHTML = `
+        <div class="resource-card-header">
+            <div class="resource-icon">${resource.icon}</div>
+            <div>
+                <h3>${resource.title}</h3>
+                <div class="resource-type">${resource.type}</div>
+            </div>
+            ${newBadge}
+        </div>
+        <p>${resource.description}</p>
+        <div class="resource-footer">
+            <span>${resource.updated}</span>
+            <button type="button">${resource.action}</button>
+        </div>
+    `;
+
+    card.querySelector("button").addEventListener("click", () => {
+        if (resource.url === "#") {
+            return;
+        }
+        window.open(resource.url, "_blank", "noopener,noreferrer");
+    });
+
+    return card;
+}
+
+function renderResources(filterText = "") {
+    const normalisedFilter = filterText.trim().toLowerCase();
+    const recentContainer = document.getElementById("recent-resources");
+    const emptyState = document.getElementById("resource-empty");
+
+    Object.values(resourceContainers).forEach((container) => {
+        if (container) container.innerHTML = "";
+    });
+
+    if (recentContainer) {
+        recentContainer.innerHTML = "";
+    }
+
+    let visibleCount = 0;
+
+    resources.forEach((resource) => {
+        const searchText = `${resource.title} ${resource.description} ${resource.category} ${resource.type}`.toLowerCase();
+
+        if (normalisedFilter && !searchText.includes(normalisedFilter)) {
+            return;
+        }
+
+        visibleCount += 1;
+
+        const mainContainer = resourceContainers[resource.category];
+        if (mainContainer) {
+            mainContainer.appendChild(createResourceCard(resource));
+        }
+
+        if (resource.isNew && recentContainer) {
+            recentContainer.appendChild(createResourceCard(resource));
+        }
+    });
+
+    document.querySelectorAll(".resource-section").forEach((section) => {
+        const grid = section.querySelector(".resource-grid");
+        section.hidden = !grid || grid.children.length === 0;
+    });
+
+    if (emptyState) {
+        emptyState.hidden = visibleCount > 0;
+    }
+}
+
+const resourceSearch = document.getElementById("resource-search");
+
+if (resourceSearch) {
+    resourceSearch.addEventListener("input", () => {
+        renderResources(resourceSearch.value);
+    });
+}
+
+renderResources();
 
 // ---------- Book a Session ----------
 

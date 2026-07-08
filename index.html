@@ -1,8 +1,8 @@
 <!--
 ==================================================
 BA Portal
-Version : v0.1.7
-Release : Book a Session
+Version : v0.1.8
+Release : Resources
 Date    : 08 July 2026
 ==================================================
 -->
@@ -11,8 +11,8 @@ Date    : 08 July 2026
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BA Portal v0.1.7</title>
-<link rel="stylesheet" href="css/styles.css?v=0.1.7">
+<title>BA Portal v0.1.8</title>
+<link rel="stylesheet" href="css/styles.css?v=0.1.8">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </head>
@@ -21,7 +21,7 @@ Date    : 08 July 2026
 <h1>BA Portal</h1>
 <nav>
 <button class="nav-button active" data-page="dashboard">🏠 Dashboard</button>
-<button class="nav-button" data-page="library">📚 Library</button>
+<button class="nav-button" data-page="resources">📚 Resources</button>
 <button class="nav-button" data-page="training">🎓 Training</button>
 <button class="nav-button" data-page="support">💬 Support</button>
 <button class="nav-button" data-page="booking">📅 Book a Session</button>
@@ -40,10 +40,10 @@ Date    : 08 July 2026
   <p class="intro">Everything you need is just a click away.</p>
 
   <div class="card-grid">
-    <div class="card" data-page-link="library">
-      <h3>📚 Library</h3>
+    <div class="card" data-page-link="resources">
+      <h3>📚 Resources</h3>
       <p>Find guides, documents and useful links.</p>
-      <button>Open Library</button>
+      <button>Open Resources</button>
     </div>
 
     <div class="card" data-page-link="training">
@@ -78,49 +78,55 @@ Date    : 08 July 2026
   </div>
 </section>
 
-<section id="library" class="page">
-<h2>📚 Library</h2>
-<p>Everything you need in one place.</p>
+<section id="resources" class="page">
+  <h2>📚 Resources</h2>
+  <p class="intro">Everything you need for your project, all in one place.</p>
 
-<h3>Available Today</h3>
+  <div class="resource-search-wrap">
+    <label for="resource-search">Search resources</label>
+    <input id="resource-search" type="search" placeholder="Search resources..." autocomplete="off">
+  </div>
 
-<div class="card">
-<h4>📖 Guides</h4>
-<p>Simple, step-by-step guides written in plain English.</p>
-<button>Open Guides</button>
-</div>
+  <div id="resource-empty" class="card muted resource-empty" hidden>
+    <h3>No matching resources</h3>
+    <p>Try a different search word, or clear the search box to see everything again.</p>
+  </div>
 
-<div class="card">
-<h4>📄 Documents</h4>
-<p>Templates, checklists and downloadable PDFs.</p>
-<button>Browse Documents</button>
-</div>
+  <section class="resource-section" data-resource-section="recent">
+    <h3 class="section-heading">⭐ Recently Added</h3>
+    <div id="recent-resources" class="resource-grid"></div>
+  </section>
 
-<div class="card">
-<h4>🔗 Useful Links</h4>
-<p>Recommended online resources, tools and services.</p>
-<button>Browse Links</button>
-</div>
+  <section class="resource-section" data-resource-section="Training Guides">
+    <h3 class="section-heading">📘 Training Guides</h3>
+    <div id="training-guide-resources" class="resource-grid"></div>
+  </section>
 
-<div class="card">
-<h4>🔍 Search the Library</h4>
-<p>Find guides, documents and useful links.</p>
-<button>Search</button>
-</div>
+  <section class="resource-section" data-resource-section="Project Documents">
+    <h3 class="section-heading">📄 Project Documents</h3>
+    <div id="project-document-resources" class="resource-grid"></div>
+  </section>
 
-<h3>Coming Soon</h3>
+  <section class="resource-section" data-resource-section="Useful Links">
+    <h3 class="section-heading">🌐 Useful Links</h3>
+    <div id="useful-link-resources" class="resource-grid"></div>
+  </section>
 
-<div class="card muted">
-<h4>📤 Upload a Document</h4>
-<p>Soon you'll be able to upload documents directly through the portal.</p>
-<span>Coming Soon</span>
-</div>
+  <h3 class="section-heading">Coming Soon</h3>
 
-<div class="card muted">
-<h4>🎥 Video Library</h4>
-<p>Short, easy-to-follow training videos.</p>
-<span>Coming Soon</span>
-</div>
+  <div class="card-grid">
+    <div class="card muted">
+      <h3>🎥 Video Library</h3>
+      <p>Short, easy-to-follow training videos will be added in a future release.</p>
+      <span class="badge">Coming Soon</span>
+    </div>
+
+    <div class="card muted">
+      <h3>📤 Customer Uploads</h3>
+      <p>Soon customers will be able to upload documents directly through the portal.</p>
+      <span class="badge">Coming Soon</span>
+    </div>
+  </div>
 </section>
 
 <section id="training" class="page">
@@ -207,7 +213,7 @@ Date    : 08 July 2026
 
 </main>
 
-<script src="js/version.js?v=0.1.7"></script>
-<script src="js/main.js?v=0.1.7"></script>
+<script src="js/version.js?v=0.1.8"></script>
+<script src="js/main.js?v=0.1.8"></script>
 </body>
 </html>
