@@ -1,5 +1,23 @@
 # BA Portal Change Log
 
+## v0.2.0 – Customer Access Foundations
+**Date:** 08 July 2026
+
+### Added
+- Added a front-end customer access screen before the portal loads.
+- Added an **Enter Portal** action for controlled testing.
+- Added a basic sign out action on the **My Account** page.
+- Added a customer profile object in `js/main.js` to drive customer, project and access details from one place.
+- Added customer/project/access placeholders across Dashboard and My Account.
+
+### Changed
+- Updated the displayed portal version to **v0.2.0 – Customer Access Foundations**.
+- Improved **My Account** so it now shows customer details, portal access and a security notice.
+
+### Notes
+- This is not real authentication yet. It is a front-end foundation so the portal behaves like a customer portal while Firebase authentication is planned.
+- Real email/password authentication, permissions and customer-specific resources should follow in later releases.
+
 ## v0.1.9 – Dashboard Improvements
 **Date:** 08 July 2026
 

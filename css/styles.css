@@ -1,8 +1,8 @@
 /*
 ==================================================
 BA Portal
-Version : v0.1.9
-Release : Dashboard Improvements
+Version : v0.2.0
+Release : Customer Access Foundations
 Date    : 08 July 2026
 ==================================================
 */
@@ -624,4 +624,83 @@ Dashboard Improvements v0.1.9
     .update-item {
         border-radius: var(--radius-md);
     }
+}
+
+
+/*
+==================================================
+Customer Access Foundations v0.2.0
+==================================================
+*/
+
+body.access-locked {
+    display: grid;
+    place-items: center;
+    padding: 22px;
+}
+
+body.access-locked .portal-shell {
+    display: none;
+}
+
+body.access-unlocked .access-screen {
+    display: none;
+}
+
+.access-screen {
+    width: min(100%, 520px);
+}
+
+.access-card {
+    padding: 34px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018));
+    box-shadow: var(--shadow-soft);
+}
+
+.access-card h1 {
+    margin: 0 0 12px;
+    font-size: clamp(2rem, 8vw, 3.4rem);
+    letter-spacing: -0.07em;
+    line-height: 1;
+}
+
+.access-card p {
+    margin-bottom: 22px;
+}
+
+.demo-access-note {
+    display: grid;
+    gap: 7px;
+    margin: 24px 0;
+    padding: 16px;
+    border: 1px solid rgba(216, 178, 110, 0.22);
+    border-radius: var(--radius-md);
+    background: var(--accent-soft);
+}
+
+.demo-access-note strong {
+    color: var(--text-main);
+}
+
+.demo-access-note span {
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.access-card button {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid rgba(216, 178, 110, 0.48);
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--text-main);
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.access-card button:hover {
+    background: rgba(216, 178, 110, 0.24);
 }

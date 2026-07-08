@@ -1,14 +1,76 @@
 /*
 ==================================================
 BA Portal
-Version : v0.1.9
-Release : Dashboard Improvements
+Version : v0.2.0
+Release : Customer Access Foundations
 Date    : 08 July 2026
 ==================================================
 */
 
 const buttons = document.querySelectorAll(".nav-button");
 const pages = document.querySelectorAll(".page");
+
+// ---------- Customer Access Foundation ----------
+
+const customerProfile = {
+    customerName: "Demo Customer",
+    projectName: "AI Customer Portal",
+    contactName: "Main Contact",
+    accessStatus: "Active",
+    accessLevel: "Customer",
+    accessExpiry: "To be confirmed",
+    projectSummary: "Resources, training and booking are available."
+};
+
+function setText(id, value) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+function applyCustomerProfile() {
+    setText("dashboard-customer-name", customerProfile.customerName);
+    setText("dashboard-project-name", customerProfile.projectName);
+    setText("dashboard-project-summary", customerProfile.projectSummary);
+    setText("account-customer-name", customerProfile.customerName);
+    setText("account-project-name", customerProfile.projectName);
+    setText("account-contact-name", customerProfile.contactName);
+    setText("account-access-status", customerProfile.accessStatus);
+    setText("account-access-level", customerProfile.accessLevel);
+    setText("account-access-expiry", customerProfile.accessExpiry);
+}
+
+function unlockPortal() {
+    document.body.classList.remove("access-locked");
+    document.body.classList.add("access-unlocked");
+    localStorage.setItem("baPortalAccess", "true");
+    showPage("dashboard");
+}
+
+function lockPortal() {
+    document.body.classList.add("access-locked");
+    document.body.classList.remove("access-unlocked");
+    localStorage.removeItem("baPortalAccess");
+}
+
+const signInButton = document.getElementById("demo-sign-in");
+const logoutButton = document.getElementById("logout-button");
+
+if (signInButton) {
+    signInButton.addEventListener("click", unlockPortal);
+}
+
+if (logoutButton) {
+    logoutButton.addEventListener("click", lockPortal);
+}
+
+applyCustomerProfile();
+
+if (localStorage.getItem("baPortalAccess") === "true") {
+    unlockPortal();
+}
+
 
 function showPage(target) {
     buttons.forEach((button) => button.classList.remove("active"));

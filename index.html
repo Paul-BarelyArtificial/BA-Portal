@@ -1,8 +1,8 @@
 <!--
 ==================================================
 BA Portal
-Version : v0.1.9
-Release : Dashboard Improvements
+Version : v0.2.0
+Release : Customer Access Foundations
 Date    : 08 July 2026
 ==================================================
 -->
@@ -11,13 +11,27 @@ Date    : 08 July 2026
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BA Portal v0.1.9</title>
-<link rel="stylesheet" href="css/styles.css?v=0.1.9">
+<title>BA Portal v0.2.0</title>
+<link rel="stylesheet" href="css/styles.css?v=0.2.0">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </head>
-<body>
-<aside class="sidebar">
+<body class="access-locked">
+<div id="access-screen" class="access-screen">
+  <div class="access-card">
+    <p class="eyebrow">Barely Artificial</p>
+    <h1>Customer Portal</h1>
+    <p>Sign in to view your resources, training and booking options.</p>
+
+    <div class="demo-access-note">
+      <strong>v0.2.0 access foundation</strong>
+      <span>This is a front-end access screen for testing. Real email/password authentication will be connected later.</span>
+    </div>
+
+    <button id="demo-sign-in" type="button">Enter Portal</button>
+  </div>
+</div>
+<aside class="sidebar portal-shell">
 <h1>BA Portal</h1>
 <nav>
 <button class="nav-button active" data-page="dashboard">🏠 Dashboard</button>
@@ -30,11 +44,11 @@ Date    : 08 July 2026
 
 <footer class="sidebar-footer">
 <div class="app-name">BA Portal</div>
-<div class="app-version">v0.1.9 – Dashboard Improvements</div>
+<div class="app-version">v0.2.0 – Customer Access Foundations</div>
 </footer>
 </aside>
 
-<main class="main-content">
+<main class="main-content portal-shell">
 <section id="dashboard" class="page active">
   <div class="dashboard-hero">
     <div>
@@ -46,15 +60,15 @@ Date    : 08 July 2026
     <div class="account-summary-card">
       <span class="summary-label">Portal Access</span>
       <strong>Active</strong>
-      <span>Demo customer view</span>
+      <span id="dashboard-customer-name">Demo customer view</span>
     </div>
   </div>
 
   <div class="status-grid">
     <div class="status-card">
       <span>Project</span>
-      <strong>AI Customer Portal</strong>
-      <p>Resources, training and booking are available.</p>
+      <strong id="dashboard-project-name">AI Customer Portal</strong>
+      <p id="dashboard-project-summary">Resources, training and booking are available.</p>
     </div>
 
     <div class="status-card">
@@ -244,34 +258,58 @@ Date    : 08 July 2026
 
   <div class="account-detail-grid">
     <div class="card">
+      <h3>Customer Details</h3>
+      <dl class="detail-list">
+        <div>
+          <dt>Customer</dt>
+          <dd id="account-customer-name">Demo Customer</dd>
+        </div>
+        <div>
+          <dt>Project</dt>
+          <dd id="account-project-name">AI Customer Portal</dd>
+        </div>
+        <div>
+          <dt>Contact</dt>
+          <dd id="account-contact-name">Main Contact</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="card">
       <h3>Portal Access</h3>
       <dl class="detail-list">
         <div>
           <dt>Status</dt>
-          <dd>Active</dd>
+          <dd id="account-access-status">Active</dd>
         </div>
         <div>
           <dt>Access Level</dt>
-          <dd>Customer</dd>
+          <dd id="account-access-level">Customer</dd>
         </div>
         <div>
           <dt>Expiry</dt>
-          <dd>To be confirmed</dd>
+          <dd id="account-access-expiry">To be confirmed</dd>
         </div>
       </dl>
     </div>
 
     <div class="card muted">
-      <h3>Login Management</h3>
-      <p>Password changes and account management will be added when authentication is connected.</p>
-      <span class="badge">Coming Soon</span>
+      <h3>Security Notice</h3>
+      <p>This release adds the portal access structure only. Real customer email/password login will be connected in a later Firebase release.</p>
+      <span class="badge">Foundation</span>
+    </div>
+
+    <div class="card">
+      <h3>Leave Portal</h3>
+      <p>Use this when you have finished reviewing your portal.</p>
+      <button id="logout-button" type="button">Sign Out</button>
     </div>
   </div>
 </section>
 
 </main>
 
-<script src="js/version.js?v=0.1.9"></script>
-<script src="js/main.js?v=0.1.9"></script>
+<script src="js/version.js?v=0.2.0"></script>
+<script src="js/main.js?v=0.2.0"></script>
 </body>
 </html>

@@ -1,11 +1,11 @@
 /*
 ==================================================
 BA Portal
-Version : v0.1.9
-Release : Dashboard Improvements
+Version : v0.2.0
+Release : Customer Access Foundations
 Date    : 08 July 2026
 ==================================================
 */
 
-const APP_VERSION = "v0.1.9";
-const RELEASE_NAME = "Dashboard Improvements";
+const APP_VERSION = "v0.2.0";
+const RELEASE_NAME = "Customer Access Foundations";
