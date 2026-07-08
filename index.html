@@ -1,8 +1,8 @@
 <!--
 ==================================================
 BA Portal
-Version : v0.1.8
-Release : Resources
+Version : v0.1.9
+Release : Dashboard Improvements
 Date    : 08 July 2026
 ==================================================
 -->
@@ -11,8 +11,8 @@ Date    : 08 July 2026
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BA Portal v0.1.8</title>
-<link rel="stylesheet" href="css/styles.css?v=0.1.8">
+<title>BA Portal v0.1.9</title>
+<link rel="stylesheet" href="css/styles.css?v=0.1.9">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </head>
@@ -30,51 +30,89 @@ Date    : 08 July 2026
 
 <footer class="sidebar-footer">
 <div class="app-name">BA Portal</div>
-<div class="app-version">v0.1.7</div>
+<div class="app-version">v0.1.9 – Dashboard Improvements</div>
 </footer>
 </aside>
 
 <main class="main-content">
 <section id="dashboard" class="page active">
-  <h2>Welcome back 👋</h2>
-  <p class="intro">Everything you need is just a click away.</p>
+  <div class="dashboard-hero">
+    <div>
+      <p class="eyebrow">Customer Portal</p>
+      <h2>Welcome back 👋</h2>
+      <p class="intro">Everything you need for your project, all in one place.</p>
+    </div>
+
+    <div class="account-summary-card">
+      <span class="summary-label">Portal Access</span>
+      <strong>Active</strong>
+      <span>Demo customer view</span>
+    </div>
+  </div>
+
+  <div class="status-grid">
+    <div class="status-card">
+      <span>Project</span>
+      <strong>AI Customer Portal</strong>
+      <p>Resources, training and booking are available.</p>
+    </div>
+
+    <div class="status-card">
+      <span>Next Step</span>
+      <strong>Review Resources</strong>
+      <p>Start with the latest guides and project documents.</p>
+    </div>
+
+    <div class="status-card">
+      <span>Support</span>
+      <strong>Help Available</strong>
+      <p>Book a session whenever you need a hand.</p>
+    </div>
+  </div>
+
+  <h3 class="section-heading">Start Here</h3>
 
   <div class="card-grid">
-    <div class="card" data-page-link="resources">
-      <h3>📚 Resources</h3>
-      <p>Find guides, documents and useful links.</p>
+    <div class="card priority-card" data-page-link="resources">
+      <h3>📚 Open Resources</h3>
+      <p>Find guides, documents and useful links in one place.</p>
       <button>Open Resources</button>
     </div>
 
-    <div class="card" data-page-link="training">
-      <h3>🎓 Training</h3>
-      <p>Continue learning with simple, practical training.</p>
-      <button>View Training</button>
-    </div>
-
-    <div class="card" data-page-link="support">
-      <h3>💬 Support</h3>
-      <p>Get help, read FAQs or contact Barely Artificial.</p>
-      <button>Get Support</button>
-    </div>
-
-    <div class="card" data-page-link="booking">
+    <div class="card priority-card" data-page-link="booking">
       <h3>📅 Book a Session</h3>
-      <p>Arrange a one-to-one session when you need a hand.</p>
-      <button>Book Now</button>
+      <p>Arrange a one-to-one session if you would like someone to talk you through anything.</p>
+      <button>Book Session</button>
     </div>
   </div>
 
-  <h3 class="section-heading">Recently Added</h3>
+  <h3 class="section-heading">What’s New</h3>
 
-  <div class="card">
-    <h3>✨ AI Terms Explained Simply</h3>
-    <p>A plain-English guide to common AI words and phrases.</p>
+  <div class="update-list">
+    <div class="update-item">
+      <div class="update-icon">✨</div>
+      <div>
+        <h3>Resources page added</h3>
+        <p>Training guides, project documents and useful links are now grouped together.</p>
+      </div>
+    </div>
+
+    <div class="update-item">
+      <div class="update-icon">📅</div>
+      <div>
+        <h3>Booking options added</h3>
+        <p>You can now choose the type of help you need before booking a session.</p>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>📖 ChatGPT Basics</h3>
-    <p>A beginner-friendly guide to getting started with ChatGPT.</p>
+  <h3 class="section-heading">Quick Links</h3>
+
+  <div class="quick-link-row">
+    <button class="quick-link" data-target-page="resources">Resources</button>
+    <button class="quick-link" data-target-page="training">Training</button>
+    <button class="quick-link" data-target-page="support">Support</button>
+    <button class="quick-link" data-target-page="account">My Account</button>
   </div>
 </section>
 
@@ -202,18 +240,38 @@ Date    : 08 July 2026
 
 <section id="account" class="page">
   <h2>👤 My Account</h2>
-  <p class="intro">Your portal details will appear here.</p>
+  <p class="intro">Your portal details and access information.</p>
 
-  <div class="card muted">
-    <h3>Account Details</h3>
-    <p>Access dates, customer details and login information will be added in a future release.</p>
-    <span class="badge">Coming Soon</span>
+  <div class="account-detail-grid">
+    <div class="card">
+      <h3>Portal Access</h3>
+      <dl class="detail-list">
+        <div>
+          <dt>Status</dt>
+          <dd>Active</dd>
+        </div>
+        <div>
+          <dt>Access Level</dt>
+          <dd>Customer</dd>
+        </div>
+        <div>
+          <dt>Expiry</dt>
+          <dd>To be confirmed</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="card muted">
+      <h3>Login Management</h3>
+      <p>Password changes and account management will be added when authentication is connected.</p>
+      <span class="badge">Coming Soon</span>
+    </div>
   </div>
 </section>
 
 </main>
 
-<script src="js/version.js?v=0.1.8"></script>
-<script src="js/main.js?v=0.1.8"></script>
+<script src="js/version.js?v=0.1.9"></script>
+<script src="js/main.js?v=0.1.9"></script>
 </body>
 </html>

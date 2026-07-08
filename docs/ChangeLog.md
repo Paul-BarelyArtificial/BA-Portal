@@ -1,5 +1,25 @@
 # BA Portal Change Log
 
+## v0.1.9 – Dashboard Improvements
+**Date:** 08 July 2026
+
+### Added
+- Added a more customer-facing dashboard hero area.
+- Added a portal access summary card.
+- Added project, next step and support status cards.
+- Added a clearer **Start Here** section with priority dashboard actions.
+- Added a **What’s New** panel for recent portal updates.
+- Added quick link buttons for faster navigation.
+- Improved the **My Account** page with static access detail placeholders.
+
+### Changed
+- Updated the displayed portal version to **v0.1.9 – Dashboard Improvements**.
+- Tidied old Library CSS references left after the Resources rename.
+
+### Notes
+- Dashboard and account details are still static placeholders until customer authentication and permissions are connected.
+- This release prepares the dashboard to become data-driven later.
+
 ## v0.1.8 – Resources
 **Date:** 08 July 2026
 

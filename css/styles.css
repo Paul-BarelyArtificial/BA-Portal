@@ -1,8 +1,8 @@
 /*
 ==================================================
 BA Portal
-Version : v0.1.8
-Release : Resources
+Version : v0.1.9
+Release : Dashboard Improvements
 Date    : 08 July 2026
 ==================================================
 */
@@ -150,7 +150,7 @@ p {
     max-width: 760px;
 }
 
-#library > p,
+#resources > p,
 #dashboard > p {
     font-size: 1.1rem;
     margin-bottom: 28px;
@@ -282,19 +282,6 @@ p {
     color: var(--accent);
     font-size: 0.85rem;
     font-weight: 700;
-}
-
-@media (min-width: 820px) {
-    #library .card {
-        display: inline-block;
-        vertical-align: top;
-        width: calc(50% - 10px);
-        min-height: 190px;
-    }
-
-    #library .card:nth-of-type(odd) {
-        margin-right: 16px;
-    }
 }
 
 @media (max-width: 760px) {
@@ -440,5 +427,201 @@ Resources v0.1.8
     .resource-footer {
         align-items: flex-start;
         flex-direction: column;
+    }
+}
+
+
+/*
+==================================================
+Dashboard Improvements v0.1.9
+==================================================
+*/
+
+.dashboard-hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.eyebrow {
+    margin: 0 0 10px;
+    color: var(--accent);
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.account-summary-card {
+    min-width: 220px;
+    padding: 18px;
+    border: 1px solid rgba(216, 178, 110, 0.28);
+    border-radius: var(--radius-md);
+    background: var(--accent-soft);
+    box-shadow: var(--shadow-soft);
+}
+
+.account-summary-card span {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.account-summary-card strong {
+    display: block;
+    margin: 8px 0 6px;
+    color: var(--text-main);
+    font-size: 1.45rem;
+}
+
+.summary-label {
+    color: var(--accent) !important;
+    font-weight: 800;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 10px 0 34px;
+}
+
+.status-card {
+    padding: 18px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.032);
+}
+
+.status-card span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-soft);
+    font-size: 0.84rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.status-card strong {
+    display: block;
+    color: var(--text-main);
+    font-size: 1.08rem;
+}
+
+.status-card p {
+    margin: 8px 0 0;
+    font-size: 0.95rem;
+}
+
+.priority-card {
+    border-color: rgba(216, 178, 110, 0.22);
+}
+
+.update-list {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+
+.update-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 18px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.028);
+}
+
+.update-item h3 {
+    margin: 0 0 6px;
+}
+
+.update-item p {
+    margin: 0;
+}
+
+.update-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: rgba(244, 241, 234, 0.07);
+    font-size: 1.2rem;
+    flex: 0 0 auto;
+}
+
+.quick-link-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.quick-link {
+    padding: 11px 15px;
+    border: 1px solid var(--border-soft);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--text-main);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.quick-link:hover {
+    border-color: rgba(216, 178, 110, 0.45);
+    background: var(--accent-soft);
+}
+
+.account-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.detail-list {
+    margin: 0;
+}
+
+.detail-list div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.detail-list div:last-child {
+    border-bottom: none;
+}
+
+.detail-list dt {
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.detail-list dd {
+    margin: 0;
+    color: var(--text-main);
+    font-weight: 800;
+    text-align: right;
+}
+
+@media (max-width: 760px) {
+    .dashboard-hero {
+        display: block;
+    }
+
+    .account-summary-card {
+        min-width: 0;
+        margin-top: 18px;
+    }
+
+    .update-item {
+        border-radius: var(--radius-md);
     }
 }
