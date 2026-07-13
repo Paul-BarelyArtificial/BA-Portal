@@ -83,3 +83,11 @@
 
 ### Notes
 - Calendly Free currently supports one booking type, so all visible session types point to the same booking calendar.
+
+## v0.2.1 – Firebase Authentication (13 July 2026)
+- Replaced the demonstration access button with real Firebase email/password authentication.
+- Added remembered sign-in sessions and Firebase sign-out.
+- Protected portal content using Firebase authentication state.
+- Added clear, customer-friendly login error messages.
+- Added the signed-in email address to My Account.
+- Removed decorative dashboard icons while keeping navigation and meaningful resource icons.

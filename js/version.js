@@ -1,11 +1,11 @@
 /*
 ==================================================
 BA Portal
-Version : v0.2.0
-Release : Customer Access Foundations
-Date    : 08 July 2026
+Version : v0.2.1
+Release : Firebase Authentication
+Date    : 13 July 2026
 ==================================================
 */
 
-const APP_VERSION = "v0.2.0";
-const RELEASE_NAME = "Customer Access Foundations";
+const APP_VERSION = "v0.2.1";
+const RELEASE_NAME = "Firebase Authentication";

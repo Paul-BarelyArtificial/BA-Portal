@@ -1,9 +1,9 @@
 <!--
 ==================================================
 BA Portal
-Version : v0.2.0
-Release : Customer Access Foundations
-Date    : 08 July 2026
+Version : v0.2.1
+Release : Firebase Authentication
+Date    : 13 July 2026
 ==================================================
 -->
 <!DOCTYPE html>
@@ -11,8 +11,8 @@ Date    : 08 July 2026
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BA Portal v0.2.0</title>
-<link rel="stylesheet" href="css/styles.css?v=0.2.0">
+<title>BA Portal v0.2.1</title>
+<link rel="stylesheet" href="css/styles.css?v=0.2.1">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </head>
@@ -23,12 +23,18 @@ Date    : 08 July 2026
     <h1>Customer Portal</h1>
     <p>Sign in to view your resources, training and booking options.</p>
 
-    <div class="demo-access-note">
-      <strong>v0.2.0 access foundation</strong>
-      <span>This is a front-end access screen for testing. Real email/password authentication will be connected later.</span>
-    </div>
+    <form id="login-form" class="login-form" novalidate>
+      <label for="login-email">Email address</label>
+      <input id="login-email" name="email" type="email" autocomplete="email" required>
 
-    <button id="demo-sign-in" type="button">Enter Portal</button>
+      <label for="login-password">Password</label>
+      <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+
+      <p id="login-error" class="login-message login-error" role="alert" hidden></p>
+      <p id="login-status" class="login-message" aria-live="polite">Checking your access…</p>
+
+      <button id="login-button" type="submit">Sign In</button>
+    </form>
   </div>
 </div>
 <aside class="sidebar portal-shell">
@@ -44,7 +50,7 @@ Date    : 08 July 2026
 
 <footer class="sidebar-footer">
 <div class="app-name">BA Portal</div>
-<div class="app-version">v0.2.0 – Customer Access Foundations</div>
+<div class="app-version">v0.2.1 – Firebase Authentication</div>
 </footer>
 </aside>
 
@@ -53,7 +59,7 @@ Date    : 08 July 2026
   <div class="dashboard-hero">
     <div>
       <p class="eyebrow">Customer Portal</p>
-      <h2>Welcome back 👋</h2>
+      <h2>Welcome back</h2>
       <p class="intro">Everything you need for your project, all in one place.</p>
     </div>
 
@@ -88,13 +94,13 @@ Date    : 08 July 2026
 
   <div class="card-grid">
     <div class="card priority-card" data-page-link="resources">
-      <h3>📚 Open Resources</h3>
+      <h3>Open Resources</h3>
       <p>Find guides, documents and useful links in one place.</p>
       <button>Open Resources</button>
     </div>
 
     <div class="card priority-card" data-page-link="booking">
-      <h3>📅 Book a Session</h3>
+      <h3>Book a Session</h3>
       <p>Arrange a one-to-one session if you would like someone to talk you through anything.</p>
       <button>Book Session</button>
     </div>
@@ -104,7 +110,6 @@ Date    : 08 July 2026
 
   <div class="update-list">
     <div class="update-item">
-      <div class="update-icon">✨</div>
       <div>
         <h3>Resources page added</h3>
         <p>Training guides, project documents and useful links are now grouped together.</p>
@@ -112,7 +117,6 @@ Date    : 08 July 2026
     </div>
 
     <div class="update-item">
-      <div class="update-icon">📅</div>
       <div>
         <h3>Booking options added</h3>
         <p>You can now choose the type of help you need before booking a session.</p>
@@ -272,6 +276,10 @@ Date    : 08 July 2026
           <dt>Contact</dt>
           <dd id="account-contact-name">Main Contact</dd>
         </div>
+        <div>
+          <dt>Signed in as</dt>
+          <dd id="account-email">—</dd>
+        </div>
       </dl>
     </div>
 
@@ -294,9 +302,9 @@ Date    : 08 July 2026
     </div>
 
     <div class="card muted">
-      <h3>Security Notice</h3>
-      <p>This release adds the portal access structure only. Real customer email/password login will be connected in a later Firebase release.</p>
-      <span class="badge">Foundation</span>
+      <h3>Security</h3>
+      <p>Your portal is protected by Firebase Authentication. Always sign out when using a shared computer.</p>
+      <span class="badge">Protected</span>
     </div>
 
     <div class="card">
@@ -309,7 +317,10 @@ Date    : 08 July 2026
 
 </main>
 
-<script src="js/version.js?v=0.2.0"></script>
-<script src="js/main.js?v=0.2.0"></script>
+<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
+<script src="js/firebase-config.js?v=0.2.1"></script>
+<script src="js/version.js?v=0.2.1"></script>
+<script src="js/main.js?v=0.2.1"></script>
 </body>
 </html>

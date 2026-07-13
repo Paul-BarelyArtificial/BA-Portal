@@ -1,35 +1,35 @@
 /*
 ==================================================
 BA Portal
-Version : v0.2.0
-Release : Customer Access Foundations
-Date    : 08 July 2026
+Version : v0.2.1
+Release : Firebase Authentication
+Date    : 13 July 2026
 ==================================================
 */
 
 const buttons = document.querySelectorAll(".nav-button");
 const pages = document.querySelectorAll(".page");
 
-// ---------- Customer Access Foundation ----------
+// ---------- Firebase Authentication ----------
+
+const auth = firebase.auth();
 
 const customerProfile = {
-    customerName: "Demo Customer",
+    customerName: "Barely Artificial",
     projectName: "AI Customer Portal",
-    contactName: "Main Contact",
+    contactName: "Paul O’Brien",
     accessStatus: "Active",
-    accessLevel: "Customer",
-    accessExpiry: "To be confirmed",
+    accessLevel: "Administrator testing access",
+    accessExpiry: "No expiry set",
     projectSummary: "Resources, training and booking are available."
 };
 
 function setText(id, value) {
     const element = document.getElementById(id);
-    if (element) {
-        element.textContent = value;
-    }
+    if (element) element.textContent = value;
 }
 
-function applyCustomerProfile() {
+function applyCustomerProfile(user) {
     setText("dashboard-customer-name", customerProfile.customerName);
     setText("dashboard-project-name", customerProfile.projectName);
     setText("dashboard-project-summary", customerProfile.projectSummary);
@@ -39,38 +39,79 @@ function applyCustomerProfile() {
     setText("account-access-status", customerProfile.accessStatus);
     setText("account-access-level", customerProfile.accessLevel);
     setText("account-access-expiry", customerProfile.accessExpiry);
+    setText("account-email", user?.email || "—");
 }
 
-function unlockPortal() {
+function unlockPortal(user) {
     document.body.classList.remove("access-locked");
     document.body.classList.add("access-unlocked");
-    localStorage.setItem("baPortalAccess", "true");
+    applyCustomerProfile(user);
     showPage("dashboard");
 }
 
 function lockPortal() {
     document.body.classList.add("access-locked");
     document.body.classList.remove("access-unlocked");
-    localStorage.removeItem("baPortalAccess");
 }
 
-const signInButton = document.getElementById("demo-sign-in");
+function friendlyAuthError(error) {
+    const messages = {
+        "auth/invalid-email": "Enter a valid email address.",
+        "auth/invalid-credential": "The email address or password is incorrect.",
+        "auth/user-disabled": "This account has been disabled. Please contact Barely Artificial.",
+        "auth/too-many-requests": "Too many attempts. Please wait a moment and try again.",
+        "auth/network-request-failed": "The portal could not reach Firebase. Check your internet connection and try again."
+    };
+    return messages[error?.code] || "Sign-in failed. Please check your details and try again.";
+}
+
+const loginForm = document.getElementById("login-form");
+const loginButton = document.getElementById("login-button");
+const loginEmail = document.getElementById("login-email");
+const loginPassword = document.getElementById("login-password");
+const loginError = document.getElementById("login-error");
+const loginStatus = document.getElementById("login-status");
 const logoutButton = document.getElementById("logout-button");
 
-if (signInButton) {
-    signInButton.addEventListener("click", unlockPortal);
-}
+loginForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    loginError.hidden = true;
+    loginStatus.textContent = "Signing in…";
+    loginButton.disabled = true;
 
-if (logoutButton) {
-    logoutButton.addEventListener("click", lockPortal);
-}
+    try {
+        await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        await auth.signInWithEmailAndPassword(loginEmail.value.trim(), loginPassword.value);
+        loginForm.reset();
+    } catch (error) {
+        loginError.textContent = friendlyAuthError(error);
+        loginError.hidden = false;
+        loginStatus.textContent = "";
+    } finally {
+        loginButton.disabled = false;
+    }
+});
 
-applyCustomerProfile();
+logoutButton?.addEventListener("click", async () => {
+    logoutButton.disabled = true;
+    try {
+        await auth.signOut();
+    } finally {
+        logoutButton.disabled = false;
+    }
+});
 
-if (localStorage.getItem("baPortalAccess") === "true") {
-    unlockPortal();
-}
-
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        loginError.hidden = true;
+        loginStatus.textContent = "";
+        unlockPortal(user);
+    } else {
+        lockPortal();
+        loginStatus.textContent = "Enter your email address and password.";
+        loginEmail?.focus();
+    }
+});
 
 function showPage(target) {
     buttons.forEach((button) => button.classList.remove("active"));
