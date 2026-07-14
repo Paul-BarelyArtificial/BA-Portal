@@ -178,11 +178,11 @@ p {
 }
 
 .collection-group {
-    border: 1px solid var(--border-soft);
+    border: 1px solid rgba(94, 140, 232, 0.35);
     border-radius: 20px;
     padding: 20px 20px 4px;
     margin: 24px 0 30px;
-    background: rgba(255, 255, 255, 0.015);
+    background: rgba(45, 76, 148, 0.14);
 }
 
 .collection-group .resource-grid {
