@@ -1,8 +1,8 @@
 /*
 ==================================================
 BA Portal
-Version : v0.2.1
-Release : Firebase Authentication
+Version : v0.2.6
+Release : Live Customer Library
 Date    : 13 July 2026
 ==================================================
 */
@@ -106,6 +106,7 @@ auth.onAuthStateChanged((user) => {
         loginError.hidden = true;
         loginStatus.textContent = "";
         unlockPortal(user);
+        loadCustomerLibrary(user);
     } else {
         lockPortal();
         loginStatus.textContent = "Enter your email address and password.";
@@ -156,202 +157,106 @@ pageButtons.forEach((button) => {
 });
 
 
-// ---------- Resources ----------
+// ---------- Live Library ----------
 
-const resources = [
-    {
-        icon: "📘",
-        title: "AI Basics for SMEs",
-        description: "A plain-English introduction to what AI is and where it can help.",
-        category: "Training Guides",
-        type: "Guide",
-        updated: "Added this week",
-        action: "Open",
-        url: "#",
-        isNew: true
-    },
-    {
-        icon: "💬",
-        title: "Getting Started with ChatGPT",
-        description: "A simple guide to using ChatGPT safely and usefully.",
-        category: "Training Guides",
-        type: "Guide",
-        updated: "Updated 8 July",
-        action: "Open",
-        url: "#",
-        isNew: true
-    },
-    {
-        icon: "✍️",
-        title: "Prompt Writing Basics",
-        description: "How to ask clearer questions and get better answers from AI tools.",
-        category: "Training Guides",
-        type: "Guide",
-        updated: "Updated 8 July",
-        action: "Open",
-        url: "#",
-        isNew: false
-    },
-    {
-        icon: "📄",
-        title: "Project Proposal",
-        description: "The agreed project approach, scope and objectives.",
-        category: "Project Documents",
-        type: "PDF",
-        updated: "Updated 3 July",
-        action: "Open",
-        url: "#",
-        isNew: true
-    },
-    {
-        icon: "📄",
-        title: "Statement of Work",
-        description: "What is included, what is not included, and how delivery will work.",
-        category: "Project Documents",
-        type: "Document",
-        updated: "Updated 3 July",
-        action: "Open",
-        url: "#",
-        isNew: false
-    },
-    {
-        icon: "✅",
-        title: "Customer Readiness Checklist",
-        description: "A simple checklist showing what we need from you and when.",
-        category: "Project Documents",
-        type: "Checklist",
-        updated: "Updated 4 July",
-        action: "Open",
-        url: "#",
-        isNew: false
-    },
-    {
-        icon: "🌐",
-        title: "ChatGPT",
-        description: "Open ChatGPT in a new browser tab.",
-        category: "Useful Links",
-        type: "Website",
-        updated: "Useful link",
-        action: "Visit",
-        url: "https://chatgpt.com/",
-        isNew: false
-    },
-    {
-        icon: "🌐",
-        title: "Claude",
-        description: "Open Claude in a new browser tab.",
-        category: "Useful Links",
-        type: "Website",
-        updated: "Useful link",
-        action: "Visit",
-        url: "https://claude.ai/",
-        isNew: false
-    },
-    {
-        icon: "🌐",
-        title: "Barely Artificial",
-        description: "Visit the Barely Artificial website.",
-        category: "Useful Links",
-        type: "Website",
-        updated: "Useful link",
-        action: "Visit",
-        url: "https://www.barelyartificial.com/",
-        isNew: false
-    }
-];
+let libraryItems = [];
+let currentCustomerId = "";
 
-const resourceContainers = {
-    "Training Guides": document.getElementById("training-guide-resources"),
-    "Project Documents": document.getElementById("project-document-resources"),
-    "Useful Links": document.getElementById("useful-link-resources")
-};
+function escapeHtml(value = "") {
+    return String(value).replace(/[&<>\'\"]/g, (character) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
+    })[character]);
+}
 
-function createResourceCard(resource) {
+function libraryIcon(item) {
+    if (item.itemType === "Link") return "🌐";
+    const type = String(item.contentType || item.fileName || "").toLowerCase();
+    if (type.includes("pdf")) return "📕";
+    if (type.includes("image") || /\.(png|jpg|jpeg|webp)$/.test(type)) return "🖼️";
+    if (type.includes("presentation") || /\.(ppt|pptx)$/.test(type)) return "📊";
+    return item.category === "Training" ? "📘" : "📄";
+}
+
+function createLibraryCard(item) {
     const card = document.createElement("article");
     card.className = "card resource-card";
-    card.dataset.searchText = `${resource.title} ${resource.description} ${resource.category} ${resource.type}`.toLowerCase();
-
-    const newBadge = resource.isNew ? '<span class="badge new-badge">New</span>' : "";
-
+    card.dataset.searchText = `${item.title} ${item.description || ""} ${item.category || ""}`.toLowerCase();
+    const url = item.itemType === "Link" ? item.externalUrl : item.downloadUrl;
     card.innerHTML = `
         <div class="resource-card-header">
-            <div class="resource-icon">${resource.icon}</div>
-            <div>
-                <h3>${resource.title}</h3>
-                <div class="resource-type">${resource.type}</div>
-            </div>
-            ${newBadge}
+            <div class="resource-icon">${libraryIcon(item)}</div>
+            <div><h3>${escapeHtml(item.title)}</h3><div class="resource-type">${escapeHtml(item.category || item.itemType || "Library item")}</div></div>
         </div>
-        <p>${resource.description}</p>
+        <p>${escapeHtml(item.description || "")}</p>
         <div class="resource-footer">
-            <span>${resource.updated}</span>
-            <button type="button">${resource.action}</button>
-        </div>
-    `;
-
+            <span>Version ${escapeHtml(item.version || "1.0")}</span>
+            <button type="button" ${url ? "" : "disabled"}>${item.itemType === "Link" ? "Open Link" : "Open File"}</button>
+        </div>`;
     card.querySelector("button").addEventListener("click", () => {
-        if (resource.url === "#") {
-            return;
-        }
-        window.open(resource.url, "_blank", "noopener,noreferrer");
+        if (url) window.open(url, "_blank", "noopener,noreferrer");
     });
-
     return card;
 }
 
-function renderResources(filterText = "") {
-    const normalisedFilter = filterText.trim().toLowerCase();
-    const recentContainer = document.getElementById("recent-resources");
-    const emptyState = document.getElementById("resource-empty");
-
-    Object.values(resourceContainers).forEach((container) => {
-        if (container) container.innerHTML = "";
+function renderLibrary(filterText = "") {
+    const groups = document.getElementById("library-groups");
+    const empty = document.getElementById("resource-empty");
+    if (!groups) return;
+    groups.innerHTML = "";
+    const filter = filterText.trim().toLowerCase();
+    const visible = libraryItems.filter((item) => `${item.title} ${item.description || ""} ${item.category || ""}`.toLowerCase().includes(filter));
+    const categoryMap = new Map();
+    visible.forEach((item) => {
+        const category = item.category || "Other";
+        if (!categoryMap.has(category)) categoryMap.set(category, []);
+        categoryMap.get(category).push(item);
     });
+    [...categoryMap.keys()].sort().forEach((category) => {
+        const section = document.createElement("section");
+        section.className = "resource-section";
+        section.innerHTML = `<h3 class="section-heading">${escapeHtml(category)}</h3><div class="resource-grid"></div>`;
+        const grid = section.querySelector(".resource-grid");
+        categoryMap.get(category).sort((a,b) => a.title.localeCompare(b.title)).forEach((item) => grid.appendChild(createLibraryCard(item)));
+        groups.appendChild(section);
+    });
+    if (empty) empty.hidden = visible.length > 0;
+}
 
-    if (recentContainer) {
-        recentContainer.innerHTML = "";
-    }
-
-    let visibleCount = 0;
-
-    resources.forEach((resource) => {
-        const searchText = `${resource.title} ${resource.description} ${resource.category} ${resource.type}`.toLowerCase();
-
-        if (normalisedFilter && !searchText.includes(normalisedFilter)) {
+async function loadCustomerLibrary(user) {
+    const status = document.getElementById("library-status");
+    try {
+        const email = String(user.email || "").trim().toLowerCase();
+        const accessDoc = await firebase.firestore().collection("customerAccess").doc(email).get();
+        if (!accessDoc.exists) {
+            libraryItems = [];
+            if (status) status.textContent = "Your account is signed in, but it has not yet been linked to a customer.";
+            renderLibrary();
             return;
         }
-
-        visibleCount += 1;
-
-        const mainContainer = resourceContainers[resource.category];
-        if (mainContainer) {
-            mainContainer.appendChild(createResourceCard(resource));
+        const access = accessDoc.data() || {};
+        currentCustomerId = access.customerId || "";
+        if (access.customerName) {
+            customerProfile.customerName = access.customerName;
+            applyCustomerProfile(user);
         }
-
-        if (resource.isNew && recentContainer) {
-            recentContainer.appendChild(createResourceCard(resource));
-        }
-    });
-
-    document.querySelectorAll(".resource-section").forEach((section) => {
-        const grid = section.querySelector(".resource-grid");
-        section.hidden = !grid || grid.children.length === 0;
-    });
-
-    if (emptyState) {
-        emptyState.hidden = visibleCount > 0;
+        const database = firebase.firestore();
+        const [allSnapshot, selectedSnapshot] = await Promise.all([
+            database.collection("library").where("visibility", "==", "All Customers").where("status", "==", "Published").get(),
+            database.collection("library").where("visibility", "==", "Selected Customers").where("status", "==", "Published").where("customerIds", "array-contains", currentCustomerId).get()
+        ]);
+        const items = new Map();
+        [...allSnapshot.docs, ...selectedSnapshot.docs].forEach((doc) => items.set(doc.id, { id: doc.id, ...doc.data() }));
+        libraryItems = [...items.values()];
+        if (status) status.textContent = libraryItems.length ? `${libraryItems.length} item${libraryItems.length === 1 ? "" : "s"} available.` : "There are no published items in your library yet.";
+        renderLibrary(document.getElementById("resource-search")?.value || "");
+    } catch (error) {
+        console.error("Could not load customer library", error);
+        if (status) status.textContent = "Your library could not be loaded. Check Firebase permissions and indexes.";
     }
 }
 
 const resourceSearch = document.getElementById("resource-search");
-
-if (resourceSearch) {
-    resourceSearch.addEventListener("input", () => {
-        renderResources(resourceSearch.value);
-    });
-}
-
-renderResources();
+resourceSearch?.addEventListener("input", () => renderLibrary(resourceSearch.value));
 
 // ---------- Book a Session ----------
 

@@ -11,8 +11,8 @@ Date    : 13 July 2026
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BA Portal v0.2.1</title>
-<link rel="stylesheet" href="css/styles.css?v=0.2.1">
+<title>BA Portal v0.2.6</title>
+<link rel="stylesheet" href="css/styles.css?v=0.2.6">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </head>
@@ -41,7 +41,7 @@ Date    : 13 July 2026
 <h1>BA Portal</h1>
 <nav>
 <button class="nav-button active" data-page="dashboard">🏠 Dashboard</button>
-<button class="nav-button" data-page="resources">📚 Resources</button>
+<button class="nav-button" data-page="resources">📚 Your Library</button>
 <button class="nav-button" data-page="training">🎓 Training</button>
 <button class="nav-button" data-page="support">💬 Support</button>
 <button class="nav-button" data-page="booking">📅 Book a Session</button>
@@ -135,12 +135,12 @@ Date    : 13 July 2026
 </section>
 
 <section id="resources" class="page">
-  <h2>📚 Resources</h2>
+  <h2>📚 Your Library</h2>
   <p class="intro">Everything you need for your project, all in one place.</p>
 
   <div class="resource-search-wrap">
-    <label for="resource-search">Search resources</label>
-    <input id="resource-search" type="search" placeholder="Search resources..." autocomplete="off">
+    <label for="resource-search">Search your library</label>
+    <input id="resource-search" type="search" placeholder="Search your library..." autocomplete="off">
   </div>
 
   <div id="resource-empty" class="card muted resource-empty" hidden>
@@ -148,25 +148,8 @@ Date    : 13 July 2026
     <p>Try a different search word, or clear the search box to see everything again.</p>
   </div>
 
-  <section class="resource-section" data-resource-section="recent">
-    <h3 class="section-heading">⭐ Recently Added</h3>
-    <div id="recent-resources" class="resource-grid"></div>
-  </section>
-
-  <section class="resource-section" data-resource-section="Training Guides">
-    <h3 class="section-heading">📘 Training Guides</h3>
-    <div id="training-guide-resources" class="resource-grid"></div>
-  </section>
-
-  <section class="resource-section" data-resource-section="Project Documents">
-    <h3 class="section-heading">📄 Project Documents</h3>
-    <div id="project-document-resources" class="resource-grid"></div>
-  </section>
-
-  <section class="resource-section" data-resource-section="Useful Links">
-    <h3 class="section-heading">🌐 Useful Links</h3>
-    <div id="useful-link-resources" class="resource-grid"></div>
-  </section>
+  <p id="library-status" class="intro">Loading your library…</p>
+  <div id="library-groups"></div>
 
   <h3 class="section-heading">Coming Soon</h3>
 
@@ -319,8 +302,9 @@ Date    : 13 July 2026
 
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
-<script src="js/firebase-config.js?v=0.2.1"></script>
-<script src="js/version.js?v=0.2.1"></script>
-<script src="js/main.js?v=0.2.1"></script>
+<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js?v=0.2.6"></script>
+<script src="js/version.js?v=0.2.6"></script>
+<script src="js/main.js?v=0.2.6"></script>
 </body>
 </html>
