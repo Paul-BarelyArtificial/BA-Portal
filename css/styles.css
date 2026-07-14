@@ -404,6 +404,49 @@ Resources v0.1.8
     color: var(--accent-hover);
 }
 
+.booking-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.booking-card-header h3 {
+    margin: 0 0 5px;
+}
+
+.booking-card textarea {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-main);
+    font: inherit;
+    resize: vertical;
+}
+
+.booking-card label {
+    display: block;
+    color: var(--text-soft);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.booking-notes-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.booking-notes-status {
+    color: var(--text-soft);
+    font-size: 0.88rem;
+}
+
 .resource-footer {
     display: flex;
     align-items: center;

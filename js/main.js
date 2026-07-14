@@ -231,6 +231,7 @@ async function loadCustomerLibrary(user) {
             libraryItems = [];
             if (status) status.textContent = "Your account is signed in, but it has not yet been linked to a customer.";
             renderLibrary();
+            loadCustomerBookings();
             return;
         }
         const access = accessDoc.data() || {};
@@ -249,6 +250,7 @@ async function loadCustomerLibrary(user) {
         libraryItems = [...items.values()];
         if (status) status.textContent = libraryItems.length ? `${libraryItems.length} item${libraryItems.length === 1 ? "" : "s"} available.` : "There are no published items in your library yet.";
         renderLibrary(document.getElementById("resource-search")?.value || "");
+        loadCustomerBookings();
     } catch (error) {
         console.error("Could not load customer library", error);
         if (status) status.textContent = "Your library could not be loaded. Check Firebase permissions and indexes.";
@@ -257,6 +259,105 @@ async function loadCustomerLibrary(user) {
 
 const resourceSearch = document.getElementById("resource-search");
 resourceSearch?.addEventListener("input", () => renderLibrary(resourceSearch.value));
+
+// ---------- My Meetings ----------
+
+let customerBookings = [];
+
+function formatBookingDateDisplay(isoDate) {
+    if (!isoDate) return "No date set";
+    const parsed = new Date(`${isoDate}T00:00:00`);
+    if (Number.isNaN(parsed.getTime())) return isoDate;
+    return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" }).format(parsed);
+}
+
+function createBookingCard(booking) {
+    const card = document.createElement("article");
+    card.className = "card booking-card";
+    card.innerHTML = `
+        <div class="booking-card-header">
+            <div><h3>${escapeHtml(booking.title)}</h3><div class="resource-type">${escapeHtml(booking.type || "")}</div></div>
+            <span class="badge">${escapeHtml(booking.status || "")}</span>
+        </div>
+        <div class="session-meta">
+            <span>${escapeHtml(formatBookingDateDisplay(booking.date))}</span>
+            <span>${escapeHtml(booking.time || "")}</span>
+            <span>${escapeHtml(booking.duration || "")}</span>
+        </div>
+        <label>Your notes
+            <textarea rows="2" placeholder="Add a note about this session...">${escapeHtml(booking.customerNotes || "")}</textarea>
+        </label>
+        <div class="booking-notes-footer">
+            <button type="button" class="save-notes-button">Save Notes</button>
+            <span class="booking-notes-status"></span>
+        </div>`;
+
+    const textarea = card.querySelector("textarea");
+    const saveButton = card.querySelector(".save-notes-button");
+    const noteStatus = card.querySelector(".booking-notes-status");
+
+    saveButton.addEventListener("click", async () => {
+        saveButton.disabled = true;
+        noteStatus.textContent = "Saving…";
+        try {
+            await firebase.firestore().collection("bookings").doc(booking.id).update({
+                customerNotes: textarea.value.trim(),
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            booking.customerNotes = textarea.value.trim();
+            noteStatus.textContent = "Saved.";
+        } catch (error) {
+            console.error("Could not save booking notes", error);
+            noteStatus.textContent = "Could not save. Try again.";
+        } finally {
+            saveButton.disabled = false;
+        }
+    });
+
+    return card;
+}
+
+function renderMyMeetings() {
+    const upcomingHeading = document.getElementById("upcoming-meetings-heading");
+    const upcomingList = document.getElementById("upcoming-meetings-list");
+    const pastHeading = document.getElementById("past-meetings-heading");
+    const pastList = document.getElementById("past-meetings-list");
+    const empty = document.getElementById("meetings-empty");
+    if (!upcomingList || !pastList) return;
+
+    upcomingList.innerHTML = "";
+    pastList.innerHTML = "";
+
+    const upcoming = customerBookings.filter((booking) => booking.status === "Upcoming").sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+    const past = customerBookings.filter((booking) => booking.status !== "Upcoming").sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+
+    if (upcomingHeading) upcomingHeading.hidden = upcoming.length === 0;
+    upcoming.forEach((booking) => upcomingList.appendChild(createBookingCard(booking)));
+
+    if (pastHeading) pastHeading.hidden = past.length === 0;
+    past.forEach((booking) => pastList.appendChild(createBookingCard(booking)));
+
+    if (empty) empty.hidden = customerBookings.length > 0;
+}
+
+async function loadCustomerBookings() {
+    const status = document.getElementById("meetings-status");
+    if (!currentCustomerId) {
+        customerBookings = [];
+        if (status) status.textContent = "Your account is signed in, but it has not yet been linked to a customer.";
+        renderMyMeetings();
+        return;
+    }
+    try {
+        const snapshot = await firebase.firestore().collection("bookings").where("customerId", "==", currentCustomerId).get();
+        customerBookings = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        if (status) status.textContent = customerBookings.length ? `${customerBookings.length} meeting${customerBookings.length === 1 ? "" : "s"}.` : "You have no meetings yet.";
+        renderMyMeetings();
+    } catch (error) {
+        console.error("Could not load your meetings", error);
+        if (status) status.textContent = "Your meetings could not be loaded. Check Firebase permissions.";
+    }
+}
 
 // ---------- Book a Session ----------
 
