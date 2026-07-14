@@ -235,11 +235,14 @@ function renderLibrary(filterText = "") {
         });
 
         [...collectionMap.keys()].sort().forEach((collectionName) => {
+            const wrap = document.createElement("div");
+            wrap.className = "collection-group";
             const heading = document.createElement("h4");
             heading.className = "collection-heading";
             heading.textContent = `📚 ${collectionName}`;
-            section.appendChild(heading);
-            appendResourceGrid(section, collectionMap.get(collectionName));
+            wrap.appendChild(heading);
+            appendResourceGrid(wrap, collectionMap.get(collectionName));
+            section.appendChild(wrap);
         });
 
         if (standalone.length) appendResourceGrid(section, standalone);

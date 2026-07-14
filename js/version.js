@@ -1,3 +1,3 @@
-/* BA Portal v0.2.6d */
-const APP_VERSION = "v0.2.6d";
-const RELEASE_NAME = "Library Collections";
+/* BA Portal v0.2.6e */
+const APP_VERSION = "v0.2.6e";
+const RELEASE_NAME = "Collection Boundary Fix";

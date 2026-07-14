@@ -177,8 +177,20 @@ p {
     margin-top: 36px;
 }
 
+.collection-group {
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    padding: 20px 20px 4px;
+    margin: 24px 0 30px;
+    background: rgba(255, 255, 255, 0.015);
+}
+
+.collection-group .resource-grid {
+    margin: 0 0 16px;
+}
+
 .collection-heading {
-    margin: 20px 0 12px;
+    margin: 0 0 12px;
     color: var(--accent);
     font-size: 1rem;
     font-weight: 700;
