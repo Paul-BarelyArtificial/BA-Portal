@@ -1,3 +1,3 @@
-/* BA Portal v0.2.6e */
-const APP_VERSION = "v0.2.6e";
-const RELEASE_NAME = "Collection Boundary Fix";
+/* BA Portal v0.2.6f */
+const APP_VERSION = "v0.2.6f";
+const RELEASE_NAME = "Collection Box Colour";
