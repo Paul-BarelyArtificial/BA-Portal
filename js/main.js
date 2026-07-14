@@ -546,11 +546,12 @@ uploadForm?.addEventListener("submit", async (event) => {
             updatedAt: now
         });
 
-        const customerRef = database.collection("customers").doc(currentCustomerId);
-        await database.runTransaction(async (transaction) => {
-            const customerSnapshot = await transaction.get(customerRef);
-            const current = Number((customerSnapshot.data() || {}).uploadStorageUsedBytes || 0);
-            transaction.update(customerRef, { uploadStorageUsedBytes: current + file.size });
+        // A plain increment, not a read-then-write transaction: customers don't have
+        // read access to their own customers/{customerId} record (it may hold
+        // internal admin notes), only a narrow permission to raise this one field.
+        // FieldValue.increment() needs no prior read, so it works within that rule.
+        await database.collection("customers").doc(currentCustomerId).update({
+            uploadStorageUsedBytes: firebase.firestore.FieldValue.increment(file.size)
         });
 
         uploadForm.reset();
