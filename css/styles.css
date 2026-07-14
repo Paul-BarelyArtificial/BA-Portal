@@ -826,3 +826,50 @@ body.access-unlocked .access-screen {
 .update-item {
     grid-template-columns: 1fr;
 }
+
+#upload-form {
+    display: grid;
+    gap: 10px;
+    text-align: left;
+}
+
+#upload-form label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+#upload-form input,
+#upload-form textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: rgba(17, 19, 24, 0.72);
+    color: var(--text-main);
+    font: inherit;
+    resize: vertical;
+}
+
+#upload-form input:focus,
+#upload-form textarea:focus {
+    outline: 2px solid rgba(216, 178, 110, 0.38);
+    border-color: var(--accent);
+}
+
+.upload-status-tag {
+    display: inline-block;
+    margin-top: 2px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(244, 241, 234, 0.08);
+    color: var(--text-soft);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.upload-status-tag.status-published {
+    background: var(--accent-soft);
+    color: var(--accent-hover);
+}

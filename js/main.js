@@ -262,6 +262,7 @@ async function loadCustomerLibrary(user) {
             if (status) status.textContent = "Your account is signed in, but it has not yet been linked to a customer.";
             renderLibrary();
             loadCustomerBookings();
+            loadMyUploads();
             return;
         }
         const access = accessDoc.data() || {};
@@ -281,6 +282,7 @@ async function loadCustomerLibrary(user) {
         if (status) status.textContent = libraryItems.length ? `${libraryItems.length} item${libraryItems.length === 1 ? "" : "s"} available.` : "There are no published items in your library yet.";
         renderLibrary(document.getElementById("resource-search")?.value || "");
         loadCustomerBookings();
+        loadMyUploads();
     } catch (error) {
         console.error("Could not load customer library", error);
         if (status) status.textContent = "Your library could not be loaded. Check Firebase permissions and indexes.";
@@ -388,6 +390,184 @@ async function loadCustomerBookings() {
         if (status) status.textContent = "Your meetings could not be loaded. Check Firebase permissions.";
     }
 }
+
+// ---------- Customer Uploads ----------
+
+const UPLOAD_MAX_FILE_BYTES = 20 * 1024 * 1024;
+const UPLOAD_MAX_TOTAL_BYTES = 500 * 1024 * 1024;
+const UPLOAD_ALLOWED_EXTENSIONS = ["pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "png", "jpg", "jpeg", "webp", "txt", "zip"];
+
+let myUploads = [];
+
+function safeStorageName(fileName) {
+    const clean = fileName.replace(/[^a-zA-Z0-9._-]+/g, "-").replace(/-+/g, "-");
+    return `${Date.now()}-${clean || "upload"}`;
+}
+
+function titleFromFileName(fileName) {
+    const withoutExtension = fileName.includes(".") ? fileName.slice(0, fileName.lastIndexOf(".")) : fileName;
+    return withoutExtension.replace(/[_-]+/g, " ").trim() || fileName;
+}
+
+function validateUploadFile(file) {
+    const extension = file.name.includes(".") ? file.name.split(".").pop().toLowerCase() : "";
+    if (file.size > UPLOAD_MAX_FILE_BYTES) return "Files must be 20 MB or smaller.";
+    if (!UPLOAD_ALLOWED_EXTENSIONS.includes(extension)) return "That file type is not supported yet.";
+    return "";
+}
+
+function uploadStatusTag(item) {
+    if (item.status === "Published") return { text: "Shared with you", className: "status-published" };
+    if (item.status === "Archived") return { text: "Archived", className: "" };
+    return { text: "Under review", className: "" };
+}
+
+function createUploadCard(item) {
+    const card = document.createElement("article");
+    card.className = "card resource-card";
+    const tag = uploadStatusTag(item);
+    card.innerHTML = `
+        <div class="resource-card-header">
+            <div class="resource-icon">📄</div>
+            <div><h3>${escapeHtml(item.title)}</h3><div class="resource-type">${escapeHtml(item.lastUpdated || "")}</div></div>
+        </div>
+        <span class="upload-status-tag ${tag.className}">${escapeHtml(tag.text)}</span>
+        <p>${escapeHtml(item.description || "")}</p>`;
+    return card;
+}
+
+function renderMyUploads() {
+    const list = document.getElementById("uploads-list");
+    const empty = document.getElementById("uploads-empty");
+    if (!list) return;
+    list.innerHTML = "";
+    myUploads.forEach((item) => list.appendChild(createUploadCard(item)));
+    if (empty) empty.hidden = myUploads.length > 0;
+}
+
+async function loadMyUploads() {
+    const status = document.getElementById("uploads-status");
+    if (!currentCustomerId) {
+        myUploads = [];
+        if (status) status.textContent = "Your account is signed in, but it has not yet been linked to a customer.";
+        renderMyUploads();
+        return;
+    }
+    try {
+        const snapshot = await firebase.firestore().collection("library").where("uploadedByCustomerId", "==", currentCustomerId).get();
+        myUploads = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            return {
+                id: doc.id,
+                title: data.title || "Untitled",
+                description: data.description || "",
+                status: data.status || "Draft",
+                size: Number(data.size || 0),
+                lastUpdated: data.updatedAt && typeof data.updatedAt.toDate === "function"
+                    ? new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" }).format(data.updatedAt.toDate())
+                    : ""
+            };
+        }).sort((a, b) => b.id.localeCompare(a.id));
+        if (status) {
+            const usedBytes = myUploads.reduce((total, item) => total + item.size, 0);
+            const usedMb = (usedBytes / (1024 * 1024)).toFixed(1);
+            const totalMb = (UPLOAD_MAX_TOTAL_BYTES / (1024 * 1024)).toFixed(0);
+            status.textContent = `${myUploads.length} document${myUploads.length === 1 ? "" : "s"} shared — approximately ${usedMb} MB of ${totalMb} MB used.`;
+        }
+        renderMyUploads();
+    } catch (error) {
+        console.error("Could not load your uploads", error);
+        if (status) status.textContent = "Your uploads could not be loaded. Check Firebase permissions.";
+    }
+}
+
+const uploadForm = document.getElementById("upload-form");
+const uploadFileInput = document.getElementById("upload-file");
+const uploadTitleInput = document.getElementById("upload-title");
+
+uploadFileInput?.addEventListener("change", () => {
+    const file = uploadFileInput.files?.[0];
+    if (file && !uploadTitleInput.value.trim()) {
+        uploadTitleInput.value = titleFromFileName(file.name);
+    }
+});
+
+uploadForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const message = document.getElementById("upload-message");
+    const submitButton = document.getElementById("upload-submit-button");
+    const file = uploadFileInput?.files?.[0];
+    const title = uploadTitleInput?.value.trim();
+    const summary = document.getElementById("upload-summary")?.value.trim();
+
+    if (!currentCustomerId) {
+        message.textContent = "Your account is not yet linked to a customer, so uploads aren't available.";
+        return;
+    }
+    if (!file) { message.textContent = "Choose a file to upload."; return; }
+    if (!title) { message.textContent = "Enter a document title."; return; }
+    if (!summary) { message.textContent = "Tell us why this document is useful."; return; }
+    const validationMessage = validateUploadFile(file);
+    if (validationMessage) { message.textContent = validationMessage; return; }
+
+    submitButton.disabled = true;
+    message.textContent = "Uploading…";
+    let uploadedRef = null;
+
+    try {
+        const database = firebase.firestore();
+        const libraryId = database.collection("library").doc().id;
+        const filePath = `customerUploads/${currentCustomerId}/${libraryId}/${safeStorageName(file.name)}`;
+        uploadedRef = firebase.storage().ref(filePath);
+        await uploadedRef.put(file, { contentType: file.type || "application/octet-stream" });
+        const downloadUrl = await uploadedRef.getDownloadURL();
+
+        const now = firebase.firestore.FieldValue.serverTimestamp();
+        await database.collection("library").doc(libraryId).set({
+            title,
+            description: summary,
+            source: "Customer",
+            status: "Draft",
+            visibility: "Internal",
+            itemType: "File",
+            category: "Document",
+            version: "1.0",
+            uploadedByCustomerId: currentCustomerId,
+            customerIds: [currentCustomerId],
+            customerNames: customerProfile.customerName ? [customerProfile.customerName] : [],
+            owner: customerProfile.customerName || "Customer upload",
+            fileName: file.name,
+            filePath,
+            downloadUrl,
+            externalUrl: "",
+            size: file.size,
+            contentType: file.type || "application/octet-stream",
+            createdAt: now,
+            updatedAt: now
+        });
+
+        const customerRef = database.collection("customers").doc(currentCustomerId);
+        await database.runTransaction(async (transaction) => {
+            const customerSnapshot = await transaction.get(customerRef);
+            const current = Number((customerSnapshot.data() || {}).uploadStorageUsedBytes || 0);
+            transaction.update(customerRef, { uploadStorageUsedBytes: current + file.size });
+        });
+
+        uploadForm.reset();
+        message.textContent = "Document uploaded — thank you. We'll review it shortly.";
+        loadMyUploads();
+    } catch (error) {
+        console.error("Could not upload document", error);
+        if (uploadedRef) {
+            try { await uploadedRef.delete(); } catch (cleanupError) { console.warn("Could not remove incomplete upload", cleanupError); }
+        }
+        message.textContent = error.code === "storage/unauthorized"
+            ? "This upload would go over your storage allowance. Please contact us if you need to share more."
+            : "This document could not be uploaded. Please try again.";
+    } finally {
+        submitButton.disabled = false;
+    }
+});
 
 // ---------- Book a Session ----------
 

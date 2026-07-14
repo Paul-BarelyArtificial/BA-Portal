@@ -12,7 +12,7 @@ Date    : 13 July 2026
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BA Portal v0.2.6</title>
-<link rel="stylesheet" href="css/styles.css?v=0.2.6g">
+<link rel="stylesheet" href="css/styles.css?v=0.2.7">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </head>
@@ -42,6 +42,7 @@ Date    : 13 July 2026
 <nav>
 <button class="nav-button active" data-page="dashboard">🏠 Your Dashboard</button>
 <button class="nav-button" data-page="resources">📚 Your Library</button>
+<button class="nav-button" data-page="uploads">📤 Share a Document</button>
 <button class="nav-button" data-page="training">🎓 Your Training</button>
 <button class="nav-button" data-page="support">💬 Support</button>
 <button class="nav-button" data-page="booking">📅 Your Bookings</button>
@@ -159,13 +160,37 @@ Date    : 13 July 2026
       <p>Short, easy-to-follow training videos will be added in a future release.</p>
       <span class="badge">Coming Soon</span>
     </div>
-
-    <div class="card muted">
-      <h3>📤 Customer Uploads</h3>
-      <p>Soon customers will be able to upload documents directly through the portal.</p>
-      <span class="badge">Coming Soon</span>
-    </div>
   </div>
+</section>
+
+<section id="uploads" class="page">
+  <h2>📤 Share a Document</h2>
+  <p class="intro">Send us information about your business — a file and a short note on why it's useful. We'll review it before it's added anywhere else.</p>
+
+  <div class="card">
+    <form id="upload-form">
+      <label for="upload-file">File</label>
+      <input id="upload-file" name="file" type="file" required accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.png,.jpg,.jpeg,.webp,.txt,.zip" />
+      <p class="muted">Up to 20 MB per file, 500 MB total.</p>
+
+      <label for="upload-title">Document title</label>
+      <input id="upload-title" name="title" type="text" required placeholder="e.g. 2026 Menu Pricing" />
+
+      <label for="upload-summary">Why is this useful?</label>
+      <textarea id="upload-summary" name="summary" rows="3" required placeholder="A short note on what this is and why we should have it"></textarea>
+
+      <p id="upload-message" class="login-message" role="status"></p>
+      <button type="submit" id="upload-submit-button">Upload Document</button>
+    </form>
+  </div>
+
+  <h3 class="section-heading">Your Uploads</h3>
+  <p id="uploads-status" class="intro">Loading your uploads…</p>
+  <div id="uploads-empty" class="card muted resource-empty" hidden>
+    <h3>Nothing uploaded yet</h3>
+    <p>Documents you share will appear here, along with their review status.</p>
+  </div>
+  <div id="uploads-list" class="card-grid"></div>
 </section>
 
 <section id="training" class="page">
@@ -316,8 +341,8 @@ Date    : 13 July 2026
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
-<script src="js/firebase-config.js?v=0.2.6g"></script>
-<script src="js/version.js?v=0.2.6g"></script>
-<script src="js/main.js?v=0.2.6g"></script>
+<script src="js/firebase-config.js?v=0.2.7"></script>
+<script src="js/version.js?v=0.2.7"></script>
+<script src="js/main.js?v=0.2.7"></script>
 </body>
 </html>
