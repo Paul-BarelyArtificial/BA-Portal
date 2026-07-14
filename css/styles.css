@@ -177,6 +177,24 @@ p {
     margin-top: 36px;
 }
 
+.collection-heading {
+    margin: 20px 0 12px;
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.collection-tag {
+    display: inline-block;
+    margin: -6px 0 12px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-hover);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
 .card {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015));
     border: 1px solid var(--border-soft);

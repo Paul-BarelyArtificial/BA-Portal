@@ -180,13 +180,14 @@ function libraryIcon(item) {
 function createLibraryCard(item) {
     const card = document.createElement("article");
     card.className = "card resource-card";
-    card.dataset.searchText = `${item.title} ${item.description || ""} ${item.category || ""}`.toLowerCase();
+    card.dataset.searchText = `${item.title} ${item.description || ""} ${item.category || ""} ${item.collection || ""}`.toLowerCase();
     const url = item.itemType === "Link" ? item.externalUrl : item.downloadUrl;
     card.innerHTML = `
         <div class="resource-card-header">
             <div class="resource-icon">${libraryIcon(item)}</div>
             <div><h3>${escapeHtml(item.title)}</h3><div class="resource-type">${escapeHtml(item.category || item.itemType || "Library item")}</div></div>
         </div>
+        ${item.collection ? `<div class="collection-tag">📚 Part of ${escapeHtml(item.collection)}</div>` : ""}
         <p>${escapeHtml(item.description || "")}</p>
         <div class="resource-footer">
             <span>Version ${escapeHtml(item.version || "1.0")}</span>
@@ -198,13 +199,20 @@ function createLibraryCard(item) {
     return card;
 }
 
+function appendResourceGrid(section, items) {
+    const grid = document.createElement("div");
+    grid.className = "resource-grid";
+    items.sort((a, b) => a.title.localeCompare(b.title)).forEach((item) => grid.appendChild(createLibraryCard(item)));
+    section.appendChild(grid);
+}
+
 function renderLibrary(filterText = "") {
     const groups = document.getElementById("library-groups");
     const empty = document.getElementById("resource-empty");
     if (!groups) return;
     groups.innerHTML = "";
     const filter = filterText.trim().toLowerCase();
-    const visible = libraryItems.filter((item) => `${item.title} ${item.description || ""} ${item.category || ""}`.toLowerCase().includes(filter));
+    const visible = libraryItems.filter((item) => `${item.title} ${item.description || ""} ${item.category || ""} ${item.collection || ""}`.toLowerCase().includes(filter));
     const categoryMap = new Map();
     visible.forEach((item) => {
         const category = item.category || "Other";
@@ -214,9 +222,28 @@ function renderLibrary(filterText = "") {
     [...categoryMap.keys()].sort().forEach((category) => {
         const section = document.createElement("section");
         section.className = "resource-section";
-        section.innerHTML = `<h3 class="section-heading">${escapeHtml(category)}</h3><div class="resource-grid"></div>`;
-        const grid = section.querySelector(".resource-grid");
-        categoryMap.get(category).sort((a,b) => a.title.localeCompare(b.title)).forEach((item) => grid.appendChild(createLibraryCard(item)));
+        section.innerHTML = `<h3 class="section-heading">${escapeHtml(category)}</h3>`;
+
+        const items = categoryMap.get(category);
+        const collectionMap = new Map();
+        const standalone = [];
+        items.forEach((item) => {
+            const collectionName = (item.collection || "").trim();
+            if (!collectionName) { standalone.push(item); return; }
+            if (!collectionMap.has(collectionName)) collectionMap.set(collectionName, []);
+            collectionMap.get(collectionName).push(item);
+        });
+
+        [...collectionMap.keys()].sort().forEach((collectionName) => {
+            const heading = document.createElement("h4");
+            heading.className = "collection-heading";
+            heading.textContent = `📚 ${collectionName}`;
+            section.appendChild(heading);
+            appendResourceGrid(section, collectionMap.get(collectionName));
+        });
+
+        if (standalone.length) appendResourceGrid(section, standalone);
+
         groups.appendChild(section);
     });
     if (empty) empty.hidden = visible.length > 0;
