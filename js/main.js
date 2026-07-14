@@ -260,7 +260,7 @@ resourceSearch?.addEventListener("input", () => renderLibrary(resourceSearch.val
 
 // ---------- Book a Session ----------
 
-const calendlyUrl = "https://calendly.com/paul-barelyartificial/new-meeting";
+const calendlyUrl = "https://calendly.com/paul-barelyartificial/meet-with-barely-artificial";
 
 const sessions = [
     {
