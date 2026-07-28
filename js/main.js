@@ -265,7 +265,20 @@ function renderLibrary(filterText = "") {
 
         groups.appendChild(section);
     });
-    if (empty) empty.hidden = visible.length > 0;
+    if (empty) {
+        empty.hidden = visible.length > 0;
+        if (visible.length === 0) {
+            const heading = empty.querySelector("h3");
+            const body = empty.querySelector("p");
+            if (libraryItems.length === 0) {
+                if (heading) heading.textContent = "Nothing shared with you yet";
+                if (body) body.textContent = "Once Barely Artificial adds resources for you, they'll show up here.";
+            } else {
+                if (heading) heading.textContent = "No matching resources";
+                if (body) body.textContent = "Try a different search word, or clear the search box to see everything again.";
+            }
+        }
+    }
 }
 
 async function loadCustomerLibrary(user) {
