@@ -130,7 +130,23 @@ function showPage(target) {
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
         showPage(button.dataset.page);
+        closeMobileNav();
     });
+});
+
+// ---------- Mobile Nav Toggle ----------
+
+const navToggle = document.getElementById("nav-toggle");
+const portalNav = document.getElementById("portal-nav");
+
+function closeMobileNav() {
+    portalNav?.classList.remove("nav-open");
+    navToggle?.setAttribute("aria-expanded", "false");
+}
+
+navToggle?.addEventListener("click", () => {
+    const isOpen = portalNav?.classList.toggle("nav-open");
+    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
 });
 
 // ---------- Dashboard Card Navigation ----------

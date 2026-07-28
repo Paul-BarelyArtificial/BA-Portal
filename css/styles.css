@@ -314,6 +314,24 @@ p {
     font-weight: 700;
 }
 
+.sidebar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    color: var(--text-primary, #f4f1ea);
+    font-size: 1.2rem;
+    line-height: 1;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
 @media (max-width: 760px) {
     body {
         display: block;
@@ -328,11 +346,21 @@ p {
     }
 
     .sidebar h1 {
-        margin-bottom: 16px;
+        margin-bottom: 0;
+    }
+
+    .nav-toggle {
+        display: block;
     }
 
     nav {
         gap: 6px;
+        display: none;
+        margin-top: 16px;
+    }
+
+    nav.nav-open {
+        display: flex;
     }
 
     .main-content {
