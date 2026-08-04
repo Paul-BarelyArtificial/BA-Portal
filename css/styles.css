@@ -868,13 +868,15 @@ body.access-unlocked .access-screen {
     grid-template-columns: 1fr;
 }
 
-#upload-form {
+#upload-form,
+#feature-request-form {
     display: grid;
     gap: 10px;
     text-align: left;
 }
 
-#upload-form label {
+#upload-form label,
+#feature-request-form label {
     color: var(--text-muted);
     font-size: 0.9rem;
     font-weight: 600;
@@ -882,7 +884,9 @@ body.access-unlocked .access-screen {
 }
 
 #upload-form input,
-#upload-form textarea {
+#upload-form textarea,
+#feature-request-form input,
+#feature-request-form textarea {
     width: 100%;
     padding: 13px 14px;
     border: 1px solid var(--border-strong);
@@ -894,7 +898,9 @@ body.access-unlocked .access-screen {
 }
 
 #upload-form input:focus,
-#upload-form textarea:focus {
+#upload-form textarea:focus,
+#feature-request-form input:focus,
+#feature-request-form textarea:focus {
     outline: 2px solid rgba(216, 178, 110, 0.38);
     border-color: var(--accent);
 }
