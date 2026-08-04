@@ -14,7 +14,9 @@ If a signed-in customer isn't linked to a customer record yet (or their customer
 
 ## Your Dashboard
 
-A welcome screen with a couple of quick-access cards (Open Resources, Book a Session) and a short "what's new" list. Nothing customer-specific happens here beyond a personalised greeting.
+A welcome screen with a couple of quick-access cards (Open Resources, Book a Session) and a short "what's new" list.
+
+If Barely Artificial has left a personal note for this customer, it appears as a highlighted card near the top of the page (e.g. "Hi Paul, welcome to the portal, it was great catching up yesterday."). It only shows up when a note has actually been set — otherwise this card doesn't appear at all.
 
 ## Your Library
 

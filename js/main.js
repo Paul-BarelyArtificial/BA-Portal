@@ -288,10 +288,12 @@ async function loadCustomerLibrary(user) {
         const accessDoc = await firebase.firestore().collection("customerAccess").doc(email).get();
         if (!accessDoc.exists) {
             libraryItems = [];
+            currentCustomerId = "";
             if (status) status.textContent = "Your account is signed in, but it has not yet been linked to a customer.";
             renderLibrary();
             loadCustomerBookings();
             loadMyUploads();
+            loadWelcomeMessage();
             return;
         }
         const access = accessDoc.data() || {};
@@ -312,9 +314,35 @@ async function loadCustomerLibrary(user) {
         renderLibrary(document.getElementById("resource-search")?.value || "");
         loadCustomerBookings();
         loadMyUploads();
+        loadWelcomeMessage();
     } catch (error) {
         console.error("Could not load customer library", error);
         if (status) status.textContent = "Your library could not be loaded. Check Firebase permissions and indexes.";
+    }
+}
+
+async function loadWelcomeMessage() {
+    const card = document.getElementById("welcome-message-card");
+    const textEl = document.getElementById("welcome-message-text");
+    if (!card || !textEl) return;
+
+    if (!currentCustomerId) {
+        card.hidden = true;
+        return;
+    }
+
+    try {
+        const doc = await firebase.firestore().collection("customerMessages").doc(currentCustomerId).get();
+        const message = doc.exists ? String(doc.data().message || "").trim() : "";
+        if (message) {
+            textEl.textContent = message;
+            card.hidden = false;
+        } else {
+            card.hidden = true;
+        }
+    } catch (error) {
+        console.error("Could not load welcome message", error);
+        card.hidden = true;
     }
 }
 

@@ -227,6 +227,19 @@ p {
     margin: 0 0 18px;
 }
 
+.welcome-message-card {
+    border-left: 3px solid var(--accent);
+    background: linear-gradient(180deg, rgba(216, 178, 110, 0.10), rgba(216, 178, 110, 0.03));
+}
+
+.welcome-message-card p:last-child {
+    margin-bottom: 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-main);
+    white-space: pre-line;
+}
+
 .card button {
     padding: 10px 14px;
     border: 1px solid rgba(216, 178, 110, 0.36);
