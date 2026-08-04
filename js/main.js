@@ -107,6 +107,7 @@ auth.onAuthStateChanged((user) => {
         loginStatus.textContent = "";
         unlockPortal(user);
         loadCustomerLibrary(user);
+        loadComingSoon();
     } else {
         lockPortal();
         loginStatus.textContent = "Enter your email address and password.";
@@ -345,6 +346,60 @@ async function loadWelcomeMessage() {
         card.hidden = true;
     }
 }
+
+async function loadComingSoon() {
+    const list = document.getElementById("coming-soon-list");
+    if (!list) return;
+
+    try {
+        const snapshot = await firebase.firestore().collection("comingSoon").orderBy("createdAt", "desc").get();
+        if (snapshot.empty) {
+            list.innerHTML = `<div class="update-item"><div><p class="muted">Nothing new right now — check back soon.</p></div></div>`;
+            return;
+        }
+        list.innerHTML = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            return `<div class="update-item"><div><h3>${escapeHtml(data.title || "")}</h3>${data.description ? `<p>${escapeHtml(data.description)}</p>` : ""}</div></div>`;
+        }).join("");
+    } catch (error) {
+        console.error("Could not load Coming Soon items", error);
+        list.innerHTML = `<div class="update-item"><div><p class="muted">Could not load right now.</p></div></div>`;
+    }
+}
+
+const featureRequestForm = document.getElementById("feature-request-form");
+featureRequestForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const messageInput = document.getElementById("feature-request-message");
+    const status = document.getElementById("feature-request-status");
+    const button = document.getElementById("feature-request-submit-button");
+    const message = messageInput.value.trim();
+
+    if (!message) return;
+    if (!currentCustomerId) {
+        if (status) status.textContent = "Your account isn't linked to a customer yet, so we can't attach this suggestion. Contact Barely Artificial directly for now.";
+        return;
+    }
+
+    button.disabled = true;
+    if (status) status.textContent = "Sending…";
+
+    try {
+        await firebase.firestore().collection("featureRequests").add({
+            customerId: currentCustomerId,
+            customerName: customerProfile.customerName || "A customer",
+            message,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        featureRequestForm.reset();
+        if (status) status.textContent = "Thanks — your suggestion has been sent to Barely Artificial.";
+    } catch (error) {
+        console.error("Could not send suggestion", error);
+        if (status) status.textContent = "Could not send this. Please try again.";
+    } finally {
+        button.disabled = false;
+    }
+});
 
 const resourceSearch = document.getElementById("resource-search");
 resourceSearch?.addEventListener("input", () => renderLibrary(resourceSearch.value));

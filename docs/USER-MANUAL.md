@@ -18,6 +18,10 @@ A welcome screen with a couple of quick-access cards (Open Resources, Book a Ses
 
 If Barely Artificial has left a personal note for this customer, it appears as a highlighted card near the top of the page (e.g. "Hi Paul, welcome to the portal, it was great catching up yesterday."). It only shows up when a note has actually been set — otherwise this card doesn't appear at all.
 
+Further down, **"Coming Soon From Barely Artificial"** lists anything the team has posted about what's on the horizon — shown to every customer, and empty ("Nothing new right now — check back soon") when nothing's been posted.
+
+Below that, **"Have an idea?"** lets a customer type "I'd like this feature in the Portal..." and send it straight to Barely Artificial — it shows up in the Console for the team to review. If the signed-in account isn't yet linked to a real customer record, this is disabled with an explanation rather than silently failing.
+
 ## Your Library
 
 Everything the customer is allowed to see: documents, templates, downloads and links, grouped by Category (Training, Document, Template, Download).

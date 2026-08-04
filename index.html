@@ -11,8 +11,8 @@ Date    : 13 July 2026
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BA Portal v0.3.0</title>
-<link rel="stylesheet" href="css/styles.css?v=0.3.0">
+<title>BA Portal v0.4.0</title>
+<link rel="stylesheet" href="css/styles.css?v=0.4.0">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </head>
@@ -115,22 +115,21 @@ Date    : 13 July 2026
     </div>
   </div>
 
-  <h3 class="section-heading">What’s New</h3>
+  <h3 class="section-heading">Coming Soon From Barely Artificial</h3>
 
-  <div class="update-list">
-    <div class="update-item">
-      <div>
-        <h3>Resources page added</h3>
-        <p>Training guides, project documents and useful links are now grouped together.</p>
-      </div>
-    </div>
+  <div class="update-list" id="coming-soon-list">
+    <div class="update-item"><div><p class="muted">Loading…</p></div></div>
+  </div>
 
-    <div class="update-item">
-      <div>
-        <h3>Booking options added</h3>
-        <p>You can now choose the type of help you need before booking a session.</p>
-      </div>
-    </div>
+  <h3 class="section-heading">Have an idea?</h3>
+
+  <div class="card">
+    <form id="feature-request-form">
+      <label for="feature-request-message">I'd like this feature in the Portal...</label>
+      <textarea id="feature-request-message" name="message" rows="3" required placeholder="Tell us what would be useful"></textarea>
+      <p id="feature-request-status" class="login-message" role="status"></p>
+      <button type="submit" id="feature-request-submit-button">Send Suggestion</button>
+    </form>
   </div>
 
   <h3 class="section-heading">Quick Links</h3>
@@ -350,8 +349,8 @@ Date    : 13 July 2026
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-storage-compat.js"></script>
-<script src="js/firebase-config.js?v=0.3.0"></script>
-<script src="js/version.js?v=0.3.0"></script>
-<script src="js/main.js?v=0.3.0"></script>
+<script src="js/firebase-config.js?v=0.4.0"></script>
+<script src="js/version.js?v=0.4.0"></script>
+<script src="js/main.js?v=0.4.0"></script>
 </body>
 </html>
